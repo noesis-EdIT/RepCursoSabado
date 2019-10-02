@@ -1,5 +1,7 @@
 # *.suo
 # *.vb
 
-Loto/**/*.suo
-Loto/**/*.vb
+# Loto/**/*.suo
+# Loto/**/*.vb
+
+Loto/Loto/
