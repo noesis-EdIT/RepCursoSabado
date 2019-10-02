@@ -30,6 +30,7 @@ Partial Class frmPrincipal
         Me.mnuArchivoBases = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnuArchivoBasesConfig = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnuArchivoBasesBackup = New System.Windows.Forms.ToolStripMenuItem()
+        Me.mnuArchivoSep = New System.Windows.Forms.ToolStripSeparator()
         Me.mnuArchivoSalir = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnuJugada = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnuJugadaArmarJugada = New System.Windows.Forms.ToolStripMenuItem()
@@ -39,8 +40,10 @@ Partial Class frmPrincipal
         Me.mnuEstadisticas = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnuEstadisticasNrosFrecuentes = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnuEstadisticasNrosFrecuentesCol = New System.Windows.Forms.ToolStripMenuItem()
+        Me.mnuEstadisticasSep1 = New System.Windows.Forms.ToolStripSeparator()
         Me.mnuEstadisticasSumatoria = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnuEstadisticasPromedio = New System.Windows.Forms.ToolStripMenuItem()
+        Me.mnuEstadisticasSep2 = New System.Windows.Forms.ToolStripSeparator()
         Me.mnuEstadisticasAnalizarJugada = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnuEstadisticasAnalizarGrupoJugadas = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnuEstadisticasVariacionDeUnNro = New System.Windows.Forms.ToolStripMenuItem()
@@ -67,6 +70,7 @@ Partial Class frmPrincipal
         Me.gbHelp = New System.Windows.Forms.GroupBox()
         Me.lblTaparArriba = New System.Windows.Forms.Label()
         Me.WebBrowser1 = New System.Windows.Forms.WebBrowser()
+        Me.mnuVentanasSep = New System.Windows.Forms.ToolStripSeparator()
         Me.MenuStrip1.SuspendLayout()
         CType(Me.picCerrar, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.gbHelp.SuspendLayout()
@@ -84,7 +88,7 @@ Partial Class frmPrincipal
         '
         'mnuArchivo
         '
-        Me.mnuArchivo.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mnuArchivoCargar, Me.mnuArchivoFiltrar, Me.mnuArchivoBases, Me.mnuArchivoSalir})
+        Me.mnuArchivo.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mnuArchivoCargar, Me.mnuArchivoFiltrar, Me.mnuArchivoBases, Me.mnuArchivoSep, Me.mnuArchivoSalir})
         Me.mnuArchivo.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.mnuArchivo.Name = "mnuArchivo"
         Me.mnuArchivo.Size = New System.Drawing.Size(63, 21)
@@ -120,6 +124,11 @@ Partial Class frmPrincipal
         Me.mnuArchivoBasesBackup.Name = "mnuArchivoBasesBackup"
         Me.mnuArchivoBasesBackup.Size = New System.Drawing.Size(236, 22)
         Me.mnuArchivoBasesBackup.Text = "Backup / Restaurar"
+        '
+        'mnuArchivoSep
+        '
+        Me.mnuArchivoSep.Name = "mnuArchivoSep"
+        Me.mnuArchivoSep.Size = New System.Drawing.Size(162, 6)
         '
         'mnuArchivoSalir
         '
@@ -163,7 +172,7 @@ Partial Class frmPrincipal
         '
         'mnuEstadisticas
         '
-        Me.mnuEstadisticas.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mnuEstadisticasNrosFrecuentes, Me.mnuEstadisticasNrosFrecuentesCol, Me.mnuEstadisticasSumatoria, Me.mnuEstadisticasPromedio, Me.mnuEstadisticasAnalizarJugada, Me.mnuEstadisticasAnalizarGrupoJugadas, Me.mnuEstadisticasVariacionDeUnNro})
+        Me.mnuEstadisticas.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mnuEstadisticasNrosFrecuentes, Me.mnuEstadisticasNrosFrecuentesCol, Me.mnuEstadisticasSep1, Me.mnuEstadisticasSumatoria, Me.mnuEstadisticasPromedio, Me.mnuEstadisticasSep2, Me.mnuEstadisticasAnalizarJugada, Me.mnuEstadisticasAnalizarGrupoJugadas, Me.mnuEstadisticasVariacionDeUnNro})
         Me.mnuEstadisticas.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.mnuEstadisticas.Name = "mnuEstadisticas"
         Me.mnuEstadisticas.Size = New System.Drawing.Size(87, 21)
@@ -181,6 +190,11 @@ Partial Class frmPrincipal
         Me.mnuEstadisticasNrosFrecuentesCol.Size = New System.Drawing.Size(249, 22)
         Me.mnuEstadisticasNrosFrecuentesCol.Text = "Nros. más frecuentes por col."
         '
+        'mnuEstadisticasSep1
+        '
+        Me.mnuEstadisticasSep1.Name = "mnuEstadisticasSep1"
+        Me.mnuEstadisticasSep1.Size = New System.Drawing.Size(246, 6)
+        '
         'mnuEstadisticasSumatoria
         '
         Me.mnuEstadisticasSumatoria.Name = "mnuEstadisticasSumatoria"
@@ -192,6 +206,11 @@ Partial Class frmPrincipal
         Me.mnuEstadisticasPromedio.Name = "mnuEstadisticasPromedio"
         Me.mnuEstadisticasPromedio.Size = New System.Drawing.Size(249, 22)
         Me.mnuEstadisticasPromedio.Text = "Promedio"
+        '
+        'mnuEstadisticasSep2
+        '
+        Me.mnuEstadisticasSep2.Name = "mnuEstadisticasSep2"
+        Me.mnuEstadisticasSep2.Size = New System.Drawing.Size(246, 6)
         '
         'mnuEstadisticasAnalizarJugada
         '
@@ -213,7 +232,7 @@ Partial Class frmPrincipal
         '
         'mnuVentanas
         '
-        Me.mnuVentanas.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mnuVentanasHorizontal, Me.mnuVentanasVertical, Me.mnuVentanasMosaicos, Me.mnuVentanasCerrarTodas})
+        Me.mnuVentanas.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mnuVentanasHorizontal, Me.mnuVentanasVertical, Me.mnuVentanasMosaicos, Me.mnuVentanasCerrarTodas, Me.mnuVentanasSep})
         Me.mnuVentanas.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.mnuVentanas.Name = "mnuVentanas"
         Me.mnuVentanas.Size = New System.Drawing.Size(73, 21)
@@ -254,13 +273,13 @@ Partial Class frmPrincipal
         'mnuAyudaVer
         '
         Me.mnuAyudaVer.Name = "mnuAyudaVer"
-        Me.mnuAyudaVer.Size = New System.Drawing.Size(149, 22)
+        Me.mnuAyudaVer.Size = New System.Drawing.Size(152, 22)
         Me.mnuAyudaVer.Text = "Ver la ayuda"
         '
         'mnuAyudaAcercade
         '
         Me.mnuAyudaAcercade.Name = "mnuAyudaAcercade"
-        Me.mnuAyudaAcercade.Size = New System.Drawing.Size(149, 22)
+        Me.mnuAyudaAcercade.Size = New System.Drawing.Size(152, 22)
         Me.mnuAyudaAcercade.Text = "Acerca de..."
         '
         'SkinEngine1
@@ -448,6 +467,11 @@ Partial Class frmPrincipal
         Me.WebBrowser1.Size = New System.Drawing.Size(186, 448)
         Me.WebBrowser1.TabIndex = 7
         '
+        'mnuVentanasSep
+        '
+        Me.mnuVentanasSep.Name = "mnuVentanasSep"
+        Me.mnuVentanasSep.Size = New System.Drawing.Size(149, 6)
+        '
         'frmPrincipal
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -514,4 +538,8 @@ Partial Class frmPrincipal
     Friend WithEvents mnuJugadaArmarJugada As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents mnuJugadaParametros As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents mnuEstadisticasAnalizarGrupoJugadas As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents mnuArchivoSep As System.Windows.Forms.ToolStripSeparator
+    Friend WithEvents mnuEstadisticasSep1 As System.Windows.Forms.ToolStripSeparator
+    Friend WithEvents mnuEstadisticasSep2 As System.Windows.Forms.ToolStripSeparator
+    Friend WithEvents mnuVentanasSep As System.Windows.Forms.ToolStripSeparator
 End Class

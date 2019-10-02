@@ -51,13 +51,12 @@ Partial Class frmAnalizarJugadas
         Me.lblNumMasFrecuente = New System.Windows.Forms.Label()
         Me.cbxMasFrecuentes = New System.Windows.Forms.ComboBox()
         Me.cbxDosConsecutivos = New System.Windows.Forms.ComboBox()
-        Me.txtPromNumerosPrimos = New System.Windows.Forms.TextBox()
-        Me.lblCantidadPrimosParaUno = New System.Windows.Forms.Label()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.lblNumMenosFrecuente = New System.Windows.Forms.Label()
         Me.cbxMenosFrecuentes = New System.Windows.Forms.ComboBox()
         Me.picTeclado = New System.Windows.Forms.PictureBox()
         Me.UsrTecladoVirtual1 = New Loto.usrTecladoVirtual()
+        Me.lblNota = New System.Windows.Forms.Label()
         Me.GroupBox1.SuspendLayout()
         CType(Me.picTeclado, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -147,7 +146,7 @@ Partial Class frmAnalizarJugadas
         Me.txtCantPares.Location = New System.Drawing.Point(288, 64)
         Me.txtCantPares.MaxLength = 1
         Me.txtCantPares.Name = "txtCantPares"
-        Me.txtCantPares.Size = New System.Drawing.Size(27, 20)
+        Me.txtCantPares.Size = New System.Drawing.Size(36, 20)
         Me.txtCantPares.TabIndex = 18
         Me.txtCantPares.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -155,7 +154,7 @@ Partial Class frmAnalizarJugadas
         '
         Me.txtCantUnDigito.Location = New System.Drawing.Point(288, 132)
         Me.txtCantUnDigito.Name = "txtCantUnDigito"
-        Me.txtCantUnDigito.Size = New System.Drawing.Size(27, 20)
+        Me.txtCantUnDigito.Size = New System.Drawing.Size(36, 20)
         Me.txtCantUnDigito.TabIndex = 21
         Me.txtCantUnDigito.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -163,7 +162,7 @@ Partial Class frmAnalizarJugadas
         '
         Me.txtCantNumerosPrimos.Location = New System.Drawing.Point(288, 222)
         Me.txtCantNumerosPrimos.Name = "txtCantNumerosPrimos"
-        Me.txtCantNumerosPrimos.Size = New System.Drawing.Size(27, 20)
+        Me.txtCantNumerosPrimos.Size = New System.Drawing.Size(36, 20)
         Me.txtCantNumerosPrimos.TabIndex = 25
         Me.txtCantNumerosPrimos.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -179,7 +178,7 @@ Partial Class frmAnalizarJugadas
         '
         Me.txtSumatoria.Location = New System.Drawing.Point(288, 177)
         Me.txtSumatoria.Name = "txtSumatoria"
-        Me.txtSumatoria.Size = New System.Drawing.Size(27, 20)
+        Me.txtSumatoria.Size = New System.Drawing.Size(50, 20)
         Me.txtSumatoria.TabIndex = 23
         Me.txtSumatoria.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -205,7 +204,7 @@ Partial Class frmAnalizarJugadas
         'btnAnalizarJugada
         '
         Me.btnAnalizarJugada.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnAnalizarJugada.Location = New System.Drawing.Point(250, 337)
+        Me.btnAnalizarJugada.Location = New System.Drawing.Point(250, 349)
         Me.btnAnalizarJugada.Name = "btnAnalizarJugada"
         Me.btnAnalizarJugada.Size = New System.Drawing.Size(75, 29)
         Me.btnAnalizarJugada.TabIndex = 26
@@ -232,7 +231,7 @@ Partial Class frmAnalizarJugadas
         '
         'txtTra
         '
-        Me.txtTra.Location = New System.Drawing.Point(123, 337)
+        Me.txtTra.Location = New System.Drawing.Point(123, 349)
         Me.txtTra.Name = "txtTra"
         Me.txtTra.Size = New System.Drawing.Size(100, 20)
         Me.txtTra.TabIndex = 29
@@ -242,21 +241,21 @@ Partial Class frmAnalizarJugadas
         Me.chlSorteos.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.chlSorteos.FormattingEnabled = True
         Me.chlSorteos.Items.AddRange(New Object() {"Tradicional", "Desquite", "S.O.S."})
-        Me.chlSorteos.Location = New System.Drawing.Point(19, 337)
+        Me.chlSorteos.Location = New System.Drawing.Point(19, 349)
         Me.chlSorteos.Name = "chlSorteos"
         Me.chlSorteos.Size = New System.Drawing.Size(93, 55)
         Me.chlSorteos.TabIndex = 30
         '
         'txtDes
         '
-        Me.txtDes.Location = New System.Drawing.Point(123, 359)
+        Me.txtDes.Location = New System.Drawing.Point(123, 371)
         Me.txtDes.Name = "txtDes"
         Me.txtDes.Size = New System.Drawing.Size(100, 20)
         Me.txtDes.TabIndex = 31
         '
         'txtSos
         '
-        Me.txtSos.Location = New System.Drawing.Point(123, 382)
+        Me.txtSos.Location = New System.Drawing.Point(123, 394)
         Me.txtSos.Name = "txtSos"
         Me.txtSos.Size = New System.Drawing.Size(100, 20)
         Me.txtSos.TabIndex = 32
@@ -264,7 +263,7 @@ Partial Class frmAnalizarJugadas
         'btnCerrar
         '
         Me.btnCerrar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnCerrar.Location = New System.Drawing.Point(250, 367)
+        Me.btnCerrar.Location = New System.Drawing.Point(250, 379)
         Me.btnCerrar.Name = "btnCerrar"
         Me.btnCerrar.Size = New System.Drawing.Size(75, 29)
         Me.btnCerrar.TabIndex = 33
@@ -317,32 +316,12 @@ Partial Class frmAnalizarJugadas
         Me.cbxDosConsecutivos.Size = New System.Drawing.Size(50, 21)
         Me.cbxDosConsecutivos.TabIndex = 40
         '
-        'txtPromNumerosPrimos
-        '
-        Me.txtPromNumerosPrimos.Location = New System.Drawing.Point(288, 246)
-        Me.txtPromNumerosPrimos.Name = "txtPromNumerosPrimos"
-        Me.txtPromNumerosPrimos.Size = New System.Drawing.Size(27, 20)
-        Me.txtPromNumerosPrimos.TabIndex = 93
-        Me.txtPromNumerosPrimos.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        '
-        'lblCantidadPrimosParaUno
-        '
-        Me.lblCantidadPrimosParaUno.AutoSize = True
-        Me.lblCantidadPrimosParaUno.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblCantidadPrimosParaUno.Location = New System.Drawing.Point(17, 250)
-        Me.lblCantidadPrimosParaUno.Name = "lblCantidadPrimosParaUno"
-        Me.lblCantidadPrimosParaUno.Size = New System.Drawing.Size(250, 15)
-        Me.lblCantidadPrimosParaUno.TabIndex = 92
-        Me.lblCantidadPrimosParaUno.Text = "Prom. nros. primos para c/u de los 3 sorteos:"
-        '
         'GroupBox1
         '
         Me.GroupBox1.Controls.Add(Me.lblNumMenosFrecuente)
         Me.GroupBox1.Controls.Add(Me.cbxMenosFrecuentes)
         Me.GroupBox1.Controls.Add(Me.lblNumMasFrecuente)
-        Me.GroupBox1.Controls.Add(Me.txtPromNumerosPrimos)
         Me.GroupBox1.Controls.Add(Me.lblCantidadPares)
-        Me.GroupBox1.Controls.Add(Me.lblCantidadPrimosParaUno)
         Me.GroupBox1.Controls.Add(Me.lblTerminacionMasRepetida)
         Me.GroupBox1.Controls.Add(Me.cbxDosConsecutivos)
         Me.GroupBox1.Controls.Add(Me.lblNumSorteoAnterior)
@@ -361,7 +340,7 @@ Partial Class frmAnalizarJugadas
         Me.GroupBox1.Controls.Add(Me.txtCantNumerosPrimos)
         Me.GroupBox1.Location = New System.Drawing.Point(21, 49)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(354, 277)
+        Me.GroupBox1.Size = New System.Drawing.Size(354, 252)
         Me.GroupBox1.TabIndex = 94
         Me.GroupBox1.TabStop = False
         '
@@ -406,11 +385,22 @@ Partial Class frmAnalizarJugadas
         Me.UsrTecladoVirtual1.TeclaPulsada = Nothing
         Me.UsrTecladoVirtual1.Visible = False
         '
+        'lblNota
+        '
+        Me.lblNota.ForeColor = System.Drawing.Color.Sienna
+        Me.lblNota.Location = New System.Drawing.Point(21, 306)
+        Me.lblNota.Name = "lblNota"
+        Me.lblNota.Size = New System.Drawing.Size(351, 27)
+        Me.lblNota.TabIndex = 98
+        Me.lblNota.Text = "* Entre paréntesis se indica el promedio por tipo de jugada (que puede ser Tradic" & _
+            "ional, Desquite o SOS)"
+        '
         'frmAnalizarJugadas
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(386, 438)
+        Me.Controls.Add(Me.lblNota)
         Me.Controls.Add(Me.UsrTecladoVirtual1)
         Me.Controls.Add(Me.picTeclado)
         Me.Controls.Add(Me.GroupBox1)
@@ -464,11 +454,10 @@ Partial Class frmAnalizarJugadas
     Friend WithEvents lblNumMasFrecuente As System.Windows.Forms.Label
     Friend WithEvents cbxMasFrecuentes As System.Windows.Forms.ComboBox
     Friend WithEvents cbxDosConsecutivos As System.Windows.Forms.ComboBox
-    Friend WithEvents txtPromNumerosPrimos As System.Windows.Forms.TextBox
-    Friend WithEvents lblCantidadPrimosParaUno As System.Windows.Forms.Label
     Friend WithEvents GroupBox1 As System.Windows.Forms.GroupBox
     Friend WithEvents lblNumMenosFrecuente As System.Windows.Forms.Label
     Friend WithEvents cbxMenosFrecuentes As System.Windows.Forms.ComboBox
     Friend WithEvents picTeclado As System.Windows.Forms.PictureBox
     Friend WithEvents UsrTecladoVirtual1 As Loto.usrTecladoVirtual
+    Friend WithEvents lblNota As System.Windows.Forms.Label
 End Class
