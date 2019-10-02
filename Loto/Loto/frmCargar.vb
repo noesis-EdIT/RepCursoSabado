@@ -6,7 +6,6 @@ Imports System.Data.OleDb   'para trabajar con archivos excel
 Imports Microsoft.Office.Interop
 
 Public Class frmCargar
-    '
     Dim sCopiado As String = ""
     Dim CantLineas As Integer
     Dim Resultado() As String
