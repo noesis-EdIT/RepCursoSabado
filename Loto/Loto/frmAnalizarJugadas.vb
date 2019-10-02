@@ -99,7 +99,6 @@ Public Class frmAnalizarJugadas
         Call Sumatoria()
         Call DiferenciaMinimaYMaximaEntreContiguos()
         Call CantPrimos()
-        Call CantPrimosPromedioDePromedios()
     End Sub
 
     Sub LimpiarControles()
@@ -226,6 +225,7 @@ Public Class frmAnalizarJugadas
 
     Private Sub CantPares()
         Dim iCantPares As Byte
+        Dim dPromCantPares As Double
 
         For i = 0 To strSorteoNeto.Length - 1 Step 2
             If Mid(strSorteoNeto, i + 1, 2) Mod 2 = 0 Then
@@ -233,7 +233,11 @@ Public Class frmAnalizarJugadas
             End If
         Next
 
-        txtCantPares.Text = iCantPares
+        If chlSorteos.CheckedItems.Count > 0 Then
+            dPromCantPares = Round(iCantPares / chlSorteos.CheckedItems.Count, 2)
+        End If
+
+        txtCantPares.Text = iCantPares & " (" & dPromCantPares & ")"
     End Sub
 
     Private Sub TerminacionMasRepetida()
@@ -267,83 +271,6 @@ Public Class frmAnalizarJugadas
 
         If cbxTerminacion.Items.Count > 0 Then cbxTerminacion.Text = cbxTerminacion.Items(0)
     End Sub
-
-    'Private Sub ObtenerNumeroSorteoAnterior()
-    '    Dim sNumSorteo As String = txtNumSorteo.Text
-    '    Dim iNumSorteoAnterior, iNumSorteo As Integer
-    '    Dim bln As Boolean
-    '    Dim sSorteoAnterior, sConsulta As String
-    '    Dim lSorteoAnterior As New List(Of String)
-    '    Dim myReader As SqlDataReader
-
-    '    If sNumSorteo = "" Then Exit Sub
-
-    '    bln = Integer.TryParse(sNumSorteo, iNumSorteo)
-
-    '    sConsulta = "select max (NumSorteo) from Sorteos where NumSorteo < " & iNumSorteo
-    '    myReader = objConexion.EjecutarConsultaDR(sConsulta)
-
-    '    If myReader.HasRows Then
-    '        Do While myReader.Read
-    '            iNumSorteoAnterior = myReader(0)
-    '        Loop
-    '    End If
-    '    myReader.Close()
-
-    '    If iNumSorteoAnterior <> 0 Then
-    '        sConsulta = "select * from Sorteos where NumSorteo = " & iNumSorteoAnterior
-    '        myReader = objConexion.EjecutarConsultaDR(sConsulta)
-
-    '        If myReader.HasRows Then
-    '            Do While myReader.Read
-    '                If chlSorteos.GetItemCheckState(0).ToString() = "Checked" Then
-    '                    sSorteoAnterior = myReader(2)
-    '                Else
-    '                    sSorteoAnterior = "xxxxxxxxxxxx"
-    '                End If
-
-    '                If chlSorteos.GetItemCheckState(1).ToString() = "Checked" Then
-    '                    sSorteoAnterior = sSorteoAnterior & myReader(3)
-    '                Else
-    '                    sSorteoAnterior = sSorteoAnterior & "xxxxxxxxxxxx"
-    '                End If
-
-    '                If chlSorteos.GetItemCheckState(2).ToString() = "Checked" Then
-    '                    sSorteoAnterior = sSorteoAnterior & myReader(4)
-    '                Else
-    '                    sSorteoAnterior = sSorteoAnterior & "xxxxxxxxxxxx"
-    '                End If
-    '            Loop
-    '            myReader.Close()
-    '        End If
-
-    '    Else
-    '        Exit Sub
-    '    End If
-
-    '    'Busci los nros. de sSorteoAnterior que coincidan con los de strSorteoNeto
-    '    For i = 1 To sSorteoAnterior.Length - 2 Step 2
-    '        For j = 1 To strSorteoNeto.Length - 2 Step 2
-    '            If Mid(sSorteoAnterior, i, 2) = Mid(strSorteoNeto, j, 2) Then
-    '                If Not lSorteoAnterior.Contains(Mid(sSorteoAnterior, i, 2)) Then
-    '                    lSorteoAnterior.Add(Mid(sSorteoAnterior, i, 2))
-    '                End If
-    '            End If
-    '        Next
-    '    Next
-
-    '    For i = 0 To 41
-    '        For j = 0 To lSorteoAnterior.Count - 1
-    '            If CInt(lSorteoAnterior(j)) = i Then
-    '                cbxNumSorteoAnterior.Items.Add(lSorteoAnterior(j))
-    '            End If
-    '        Next
-    '    Next
-
-    '    If cbxNumSorteoAnterior.Items.Count > 0 Then
-    '        cbxNumSorteoAnterior.Text = cbxNumSorteoAnterior.Items(0)
-    '    End If
-    'End Sub
 
     Private Sub ObtenerNumeroSorteoAnterior()
         Dim sNumSorteo As String = txtNumSorteo.Text
@@ -430,6 +357,7 @@ Public Class frmAnalizarJugadas
 
     Private Sub CantNumUnSoloDigito()
         Dim Cant As Byte
+        Dim dPromCant As Double
 
         For i = 0 To lstNumerosTodos.Count - 1
             If lstNumerosTodos(i) <> "xx" Then
@@ -439,7 +367,10 @@ Public Class frmAnalizarJugadas
             End If
         Next
 
-        txtCantUnDigito.Text = Cant
+        If chlSorteos.CheckedItems.Count > 0 Then
+            dPromCant = Round(Cant / chlSorteos.CheckedItems.Count, 2)
+        End If
+        txtCantUnDigito.Text = Cant & " (" & dPromCant & ")"
     End Sub
 
     Private Sub Consecutivos()
@@ -499,12 +430,17 @@ Public Class frmAnalizarJugadas
 
     Private Sub Sumatoria()
         Dim iSuma As Integer
+        Dim dPromSuma As Double
 
         For i = 0 To lstNumerosTodos.Count - 1
             If lstNumerosTodos(i) <> "xx" Then iSuma = iSuma + CInt(lstNumerosTodos(i))
         Next
 
-        txtSumatoria.Text = iSuma
+        If chlSorteos.CheckedItems.Count > 0 Then
+            dPromSuma = Round(iSuma / chlSorteos.CheckedItems.Count, 2)
+        End If
+
+        txtSumatoria.Text = iSuma & " (" & dPromSuma & ")"
     End Sub
 
     Private Sub DiferenciaMinimaYMaximaEntreContiguos()
@@ -549,6 +485,7 @@ Public Class frmAnalizarJugadas
 
     Private Sub CantPrimos()
         Dim iNumActual, iCantDivisores, iCantPrimos As Byte
+        Dim dPromCantPrimos As Single
 
         For i = 0 To lstNumerosTodos.Count - 1
             If lstNumerosTodos(i) <> "xx" Then
@@ -563,14 +500,8 @@ Public Class frmAnalizarJugadas
             End If
         Next i
 
-        txtCantNumerosPrimos.Text = iCantPrimos
-    End Sub
-
-    Private Sub CantPrimosPromedioDePromedios()
-        Dim dProm As Single
-
-        dProm = txtCantNumerosPrimos.Text / chlSorteos.CheckedItems.Count
-        txtPromNumerosPrimos.Text = dProm
+        dPromCantPrimos = iCantPrimos / chlSorteos.CheckedItems.Count
+        txtCantNumerosPrimos.Text = iCantPrimos & " (" & dPromCantPrimos & ")"
     End Sub
 
     Private Sub dtpFecha_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles dtpFecha.KeyPress
@@ -666,10 +597,6 @@ Public Class frmAnalizarJugadas
 
     Private Sub lblCantidadPrimos_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles lblCantidadPrimos.Click
         AplicarNegrita(lblCantidadPrimos)
-    End Sub
-
-    Private Sub lblCantidadPrimosParaUno_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles lblCantidadPrimosParaUno.Click
-        AplicarNegrita(lblCantidadPrimosParaUno)
     End Sub
 #End Region
 
