@@ -1,7 +1,8 @@
 Loto/**/*.rsuser
 # Loto/**/*.suo
 # Loto/*.suo
-*.suo
+# *.suo
+Loto/Loto.suo
 Loto/**/*.user
 Loto/**/*.userosscache
 Loto/**/*.sln.docstates
