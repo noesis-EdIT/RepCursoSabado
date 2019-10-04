@@ -1,8 +1,6 @@
-*.suo
-*.vb
-*.txt
-
 # Loto/**/*.suo
-# Loto/**/*.vb
-
 # Loto/Loto/
+# *.vb
+
+*.suo
+*.txt
