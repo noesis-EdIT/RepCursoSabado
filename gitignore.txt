@@ -1,0 +1,5 @@
+Loto/**/*.rsuser
+Loto/**/*.suo
+Loto/**/*.user
+Loto/**/*.userosscache
+Loto/**/*.sln.docstates
