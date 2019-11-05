@@ -1,4 +1,5 @@
 ﻿Imports System.Data.SqlClient
+Imports System.Math
 
 Public Class frmAnalizarGrupoJugadas
     Dim VecOrdenado(41, 1) As String
@@ -8,9 +9,10 @@ Public Class frmAnalizarGrupoJugadas
     Private Sub dtpFechaDesde_TextChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles dtpFechaDesde.TextChanged, dtpFechaHasta.TextChanged
         Dim Fecha1, Fecha2 As Date
 
+        erpAnalizarVariasJugadas.Dispose()
         Fecha1 = dtpFechaDesde.Text : Fecha2 = dtpFechaHasta.Text
         If Fecha1 > Fecha2 Then
-            MessageBox.Show("La fecha inicial no debe ser posterior a la fecha final.", "Fechas", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            erpAnalizarVariasJugadas.SetError(dtpFechaHasta, "La fecha inicial no debe ser posterior a la fecha final.")
         End If
     End Sub
 
@@ -19,14 +21,17 @@ Public Class frmAnalizarGrupoJugadas
 
         If chlSorteos.CheckedItems.Count < 1 Then Exit Sub
         Cursor = Cursors.WaitCursor
-        panel1.Text = "Procesando jugadas..."
+        pnlAnalizarVariasJugadas.Text = "Procesando jugadas..."
         dFecha1 = dtpFechaDesde.Text : dFecha2 = dtpFechaHasta.Text
         lista.Clear()
         dtSorteos.Clear()
 
         Call LimpiarControles()
         Call BuscarJugada("", dFecha1, dFecha2)
-        If dtSorteos.Rows.Count = 0 Then Exit Sub
+        If dtSorteos.Rows.Count = 0 Then
+            Cursor = Cursors.Default
+            Exit Sub
+        End If
         Call CargarListaDeSorteos()
         Call NumerosMasFrecuentes()
         Call NumerosMenosFrecuentes()
@@ -38,10 +43,9 @@ Public Class frmAnalizarGrupoJugadas
         Call SumatoriaPromedio()
         Call DiferenciaMinimaYMaximaEntreContiguos()
         Call CantPrimosPromedio()
-        Call CantPrimosPromedioDePromedios()
 
         Cursor = Cursors.Default
-        panel1.Text = ""
+        pnlAnalizarVariasJugadas.Text = ""
     End Sub
 
     Sub LimpiarControles()
@@ -177,7 +181,7 @@ Public Class frmAnalizarGrupoJugadas
     End Sub
 
     Private Sub CantPares()
-        Dim sngCantPares As Single
+        Dim sngCantPares, dProm As Single
 
         For i = 0 To lista.Count - 1
             For j = 1 To lista(i).Length - 1 Step 2
@@ -191,8 +195,11 @@ Public Class frmAnalizarGrupoJugadas
 
         If lista.Count <> 0 Then
             sngCantPares = sngCantPares / lista.Count
-            txtCantPares.Text = sngCantPares
+            txtCantPares.Text = Round(sngCantPares, 2)
         End If
+
+        dProm = Round(sngCantPares / chlSorteos.CheckedItems.Count, 2)
+        txtCantPares.Text = txtCantPares.Text & " (" & dProm & ")"
     End Sub
 
     Private Sub TerminacionMasRepetida()
@@ -353,7 +360,7 @@ Public Class frmAnalizarGrupoJugadas
     End Sub
 
     Private Sub PromedioCantidadNumerosConUnDigito()
-        Dim sCant As Single
+        Dim sCant, dProm As Single
 
         If lista.Count = 0 Then Exit Sub
 
@@ -367,8 +374,11 @@ Public Class frmAnalizarGrupoJugadas
 
         If lista.Count <> 0 Then
             sCant = sCant / lista.Count
-            txtCantUnDigito.Text = sCant
+            txtCantUnDigito.Text = Round(sCant, 2)
         End If
+
+        dProm = Round(sCant / chlSorteos.CheckedItems.Count, 2)
+        txtCantUnDigito.Text = txtCantUnDigito.Text & " (" & dProm & ")"
     End Sub
 
     Private Sub Consecutivos()
@@ -467,7 +477,7 @@ Public Class frmAnalizarGrupoJugadas
 
     Private Sub SumatoriaPromedio()
         Dim iSuma As Integer
-        Dim SumaPromedio As Single
+        Dim SumaPromedio, dProm As Single
 
         For i = 0 To lista.Count - 1
             For j = 0 To lista(i).Length - 1 Step 2
@@ -481,6 +491,9 @@ Public Class frmAnalizarGrupoJugadas
             SumaPromedio = iSuma / lista.Count
             txtSumatoria.Text = Format(SumaPromedio, "##,##0.00")
         End If
+
+        dProm = Round(SumaPromedio / chlSorteos.CheckedItems.Count, 2)
+        txtSumatoria.Text = txtSumatoria.Text & " (" & dProm & ")"
     End Sub
 
     Private Sub DiferenciaMinimaYMaximaEntreContiguos()
@@ -528,7 +541,7 @@ Public Class frmAnalizarGrupoJugadas
     Private Sub CantPrimosPromedio()
         Dim sFilaActual As String
         Dim iNumActual, iCantDivisores As Byte, iCantPrimos As Integer
-        Dim dPromedioPrimos As Single
+        Dim dPromedioPrimos, dProm As Single
 
         For i = 0 To lista.Count - 1
             sFilaActual = lista(i)
@@ -549,13 +562,9 @@ Public Class frmAnalizarGrupoJugadas
             dPromedioPrimos = Format((iCantPrimos / lista.Count), "##,##0.00")
             txtCantNumerosPrimos.Text = dPromedioPrimos
         End If
-    End Sub
 
-    Private Sub CantPrimosPromedioDePromedios()
-        Dim dProm As Single
-
-        dProm = txtCantNumerosPrimos.Text / chlSorteos.CheckedItems.Count
-        txtPromNumerosPrimos.Text = dProm
+        dProm = Round(dPromedioPrimos / chlSorteos.CheckedItems.Count, 2)
+        txtCantNumerosPrimos.Text = txtCantNumerosPrimos.Text & " (" & dProm & ")"
     End Sub
 
     Private Sub btnCerrar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnCerrar.Click
@@ -565,5 +574,62 @@ Public Class frmAnalizarGrupoJugadas
     Private Sub frmAnalizarGrupoJugadas_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         dtpFechaDesde.Value = New DateTime(Year(Now), 1, 1) : dtpFechaHasta.Value = Date.Now
         chlSorteos.SetItemChecked(0, True)
+    End Sub
+
+    Private Sub frmAnalizarGrupoJugadas_Paint(ByVal sender As Object, ByVal e As System.Windows.Forms.PaintEventArgs) Handles Me.Paint
+        Call CambiarForecolors()
+    End Sub
+
+    Sub CambiarForecolors()
+        For Each ctrl In pnlAnalizarVariasJugadas.Controls
+            If TypeOf ctrl Is Label Then
+                ctrl.ForeColor = Color.Transparent
+            ElseIf TypeOf ctrl Is GroupBox Then
+                For Each ctrl2 In ctrl.Controls
+                    If TypeOf ctrl2 Is Label Then
+                        ctrl2.ForeColor = Color.Transparent
+                    End If
+                Next
+            End If
+        Next
+    End Sub
+
+    Private Sub frmAnalizarGrupoJugadas_ResizeEnd(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.ResizeEnd
+        Me.Refresh()
+    End Sub
+
+    Private Sub Panel1_Paint(ByVal sender As System.Object, ByVal e As System.Windows.Forms.PaintEventArgs) Handles pnlAnalizarVariasJugadas.Paint
+        Dim Rect As Rectangle = New Rectangle(0, 0, pnlAnalizarVariasJugadas.Width, pnlAnalizarVariasJugadas.Height)
+        Dim LinearBrush As Drawing2D.LinearGradientBrush = New Drawing2D.LinearGradientBrush(Rect, Color.DimGray, Color.DarkGray, Drawing2D.LinearGradientMode.Vertical)
+        'Dim LinearBrush As Drawing2D.LinearGradientBrush = New Drawing2D.LinearGradientBrush(Rect, Color.DarkGray, Color.Black, Drawing2D.LinearGradientMode.Vertical)
+        Dim g As Graphics = e.Graphics
+
+        g.FillRectangle(LinearBrush, 0, 0, pnlAnalizarVariasJugadas.Width, pnlAnalizarVariasJugadas.Height)
+    End Sub
+
+    Private Sub cbxMasFrecuentes_MouseEnter(ByVal sender As Object, ByVal e As System.EventArgs) Handles cbxMasFrecuentes.MouseEnter, cbxMenosFrecuentes.MouseEnter
+        panel1.Text = "Más información en formulario de 'Números más frecuentes'"
+    End Sub
+
+    Private Sub cbxMasFrecuentes_MouseLeave(ByVal sender As Object, ByVal e As System.EventArgs) Handles cbxMasFrecuentes.MouseLeave, cbxMenosFrecuentes.MouseLeave
+        panel1.Text = ""
+    End Sub
+
+    Private Sub txtNumSorteoDesde_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles txtNumSorteoDesde.KeyPress, txtNumSorteoHasta.KeyPress
+        If (Asc(e.KeyChar) < 48 Or Asc(e.KeyChar) > 57) And Asc(e.KeyChar) <> 8 And Asc(e.KeyChar) <> 13 And Asc(e.KeyChar) <> 127 And Asc(e.KeyChar) <> 32 Then
+            e.Handled = True
+        ElseIf Asc(e.KeyChar) = 13 Then
+            If txtNumSorteoDesde.Text = "" Then
+                erpAnalizarVariasJugadas.SetError(txtNumSorteoDesde, "Falta ingresar el nº de sorteo inicial")
+            ElseIf txtNumSorteoHasta.Text = "" Then
+                erpAnalizarVariasJugadas.SetError(txtNumSorteoHasta, "Falta ingresar el nº de sorteo final")
+            Else
+                Call BuscarPorNumeroDeJugada()
+            End If
+        End If
+    End Sub
+
+    Sub BuscarPorNumeroDeJugada()
+
     End Sub
 End Class

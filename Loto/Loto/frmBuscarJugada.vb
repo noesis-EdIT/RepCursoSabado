@@ -524,8 +524,4 @@ Public Class frmBuscarJugada
             panel1.Text = lvBuscarJugada.SelectedItems.Count & " filas seleccionadas"
         End If
     End Sub
-
-    Private Sub rbUltimoSorteo_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles rbUltimoSorteo.CheckedChanged
-
-    End Sub
 End Class

@@ -2,7 +2,7 @@
 Imports System.IO
 
 Public Class clsParametrosJugada
-    Private _NumMasFrecuente1, _NumMasFrecuente2, _NumMasFrecuente3 As SByte
+    Private _NumIncluir1, _NumIncluir2, _NumIncluir3 As SByte
     Private _CantPares As Byte
     Private _TerminacionParaDosNum As SByte
     Private _NumSorteoAnterior As SByte
@@ -15,30 +15,30 @@ Public Class clsParametrosJugada
     Private _CantMinimaPrimos As SByte
     Private _NumExcluido1, _NumExcluido2, _NumExcluido3 As SByte
 
-    Public Property NumMasFrecuente1() As SByte
+    Public Property NumIncluir1() As SByte
         Get
-            NumMasFrecuente1 = _NumMasFrecuente1
+            NumIncluir1 = _NumIncluir1
         End Get
         Set(ByVal value As SByte)
-            _NumMasFrecuente1 = value
+            _NumIncluir1 = value
         End Set
     End Property
 
-    Public Property NumMasFrecuente2() As SByte
+    Public Property NumIncluir2() As SByte
         Get
-            NumMasFrecuente2 = _NumMasFrecuente2
+            NumIncluir2 = _NumIncluir2
         End Get
         Set(ByVal value As SByte)
-            _NumMasFrecuente2 = value
+            _NumIncluir2 = value
         End Set
     End Property
 
-    Public Property NumMasFrecuente3() As SByte
+    Public Property NumIncluir3() As SByte
         Get
-            NumMasFrecuente3 = _NumMasFrecuente3
+            NumIncluir3 = _NumIncluir3
         End Get
         Set(ByVal value As SByte)
-            _NumMasFrecuente3 = value
+            _NumIncluir3 = value
         End Set
     End Property
 

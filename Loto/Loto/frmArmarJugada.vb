@@ -23,9 +23,9 @@ Public Class frmArmarJugada
 
     Private Sub CargarParametros()
         objParametroJugada = clsParametrosJugada.Leer
-        txtIncluir1.Text = IIf(objParametroJugada.NumMasFrecuente1 = -1, "", objParametroJugada.NumMasFrecuente1)
-        txtIncluir2.Text = IIf(objParametroJugada.NumMasFrecuente2 = -1, "", objParametroJugada.NumMasFrecuente2)
-        txtIncluir3.Text = IIf(objParametroJugada.NumMasFrecuente3 = -1, "", objParametroJugada.NumMasFrecuente3)
+        txtIncluir1.Text = IIf(objParametroJugada.NumIncluir1 = -1, "", objParametroJugada.NumIncluir1)
+        txtIncluir2.Text = IIf(objParametroJugada.NumIncluir2 = -1, "", objParametroJugada.NumIncluir2)
+        txtIncluir3.Text = IIf(objParametroJugada.NumIncluir3 = -1, "", objParametroJugada.NumIncluir3)
         txtCantPares.Text = objParametroJugada.CantPares
         txtTerminacion.Text = objParametroJugada.TerminacionParaDosNum
         txtNumSorteoAnterior.Text = IIf(objParametroJugada.NumSorteoAnterior = -1, "", objParametroJugada.NumSorteoAnterior)
@@ -63,14 +63,14 @@ Public Class frmArmarJugada
         Opcion(9) = IIf(chklstOpciones.GetItemCheckState(9).ToString() = "Checked", False, True)
 
         Do While (Not Opcion(0) Or Not Opcion(1) Or Not Opcion(2) Or Not Opcion(3) Or Not Opcion(4) Or Not Opcion(5) Or Not Opcion(6) Or Not Opcion(7) Or Not Opcion(8) Or Not Opcion(9))
-            GenerarSorteoGeneral()
+            GenerarSorteo()
 
             If Not OpcionesConsistentes() Then
                 Cursor = Cursors.Default
                 Exit Sub
             End If
 
-            OrdenacionPorBurbujeo(NumerosGenerados)
+            OrdenacionPorSeleccion(NumerosGenerados)
 
             If chklstOpciones.GetItemCheckState(0).ToString() = "Checked" Then
                 Call IncluirNumero()
@@ -123,6 +123,12 @@ Public Class frmArmarJugada
             End If
         Loop
 
+        If (Opcion(0) And Opcion(1) And Opcion(2) And Opcion(3) And Opcion(4) And Opcion(5) And Opcion(6) And Opcion(7) And Opcion(8) And Opcion(9)) Then
+            GenerarSorteo()
+            'OrdenacionPorBurbujeo(NumerosGenerados)
+            OrdenacionPorSeleccion(NumerosGenerados)
+        End If
+
         For i = 0 To 5
             If sNumero = "" Then
                 sNumero = NumerosGenerados(i)
@@ -130,6 +136,9 @@ Public Class frmArmarJugada
                 sNumero = sNumero & " " & NumerosGenerados(i)
             End If
         Next
+
+
+
 
 EfectosSorteo:
         If Not IsNothing(oLabel) Then
@@ -301,7 +310,7 @@ EfectosSorteo:
 
     End Function
 
-    Sub GenerarSorteoGeneral()
+    Sub GenerarSorteo()
         Dim sValorAleatorio As String
         Dim numAleatorio As New Random()
 
@@ -744,19 +753,20 @@ EfectosSorteo:
         End If
     End Function
 
-    Sub OrdenacionPorBurbujeo(ByVal Vector() As String)
-        Dim aux As Byte
-        Dim i, j As Byte
+    Sub OrdenacionPorSeleccion(ByVal Vector() As String)
+        Dim minimo, temp As Integer
 
-        For i = 1 To Vector.Length - 1
-            For j = 0 To Vector.Length - i - 1
-                If (CInt(Vector(j)) > CInt(Vector(j + 1))) Then
-                    aux = Vector(j + 1)
-                    Vector(j + 1) = Vector(j)
-                    Vector(j) = aux
+        For i = 0 To Vector.Length - 2
+            minimo = i
+            For j = i + 1 To Vector.Length - 1
+                If CInt(Vector(minimo)) > CInt(Vector(j)) Then
+                    minimo = j
                 End If
-            Next
-        Next
+            Next j
+            temp = Vector(i)
+            Vector(i) = Vector(minimo)
+            Vector(minimo) = temp
+        Next i
 
         For i = 0 To Vector.Length - 1
             If Len(Vector(i)) < 2 Then Vector(i) = "0" & Vector(i)

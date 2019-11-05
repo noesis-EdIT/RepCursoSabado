@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <clsParametrosJugada xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <NumMasFrecuente1>10</NumMasFrecuente1>
-  <NumMasFrecuente2>11</NumMasFrecuente2>
-  <NumMasFrecuente3>-1</NumMasFrecuente3>
+  <NumIncluir1>-1</NumIncluir1>
+  <NumIncluir2>-1</NumIncluir2>
+  <NumIncluir3>-1</NumIncluir3>
   <CantPares>3</CantPares>
   <TerminacionParaDosNum>2</TerminacionParaDosNum>
   <NumSorteoAnterior>-1</NumSorteoAnterior>
   <CantNumUnSoloDigito>2</CantNumUnSoloDigito>
   <AlmenosDosNumConsec>true</AlmenosDosNumConsec>
-  <SumatoriaMinima>86</SumatoriaMinima>
+  <SumatoriaMinima>88</SumatoriaMinima>
   <SumatoriaMaxima>160</SumatoriaMaxima>
   <DifEntreConsecutivosMin>1</DifEntreConsecutivosMin>
   <DifEntreConsecutivosMax>13</DifEntreConsecutivosMax>

@@ -55,8 +55,8 @@ Partial Class frmAnalizarJugadas
         Me.lblNumMenosFrecuente = New System.Windows.Forms.Label()
         Me.cbxMenosFrecuentes = New System.Windows.Forms.ComboBox()
         Me.picTeclado = New System.Windows.Forms.PictureBox()
-        Me.UsrTecladoVirtual1 = New Loto.usrTecladoVirtual()
         Me.lblNota = New System.Windows.Forms.Label()
+        Me.UsrTecladoVirtual1 = New Loto.usrTecladoVirtual()
         Me.GroupBox1.SuspendLayout()
         CType(Me.picTeclado, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -143,41 +143,51 @@ Partial Class frmAnalizarJugadas
         '
         'txtCantPares
         '
+        Me.txtCantPares.BackColor = System.Drawing.SystemColors.Window
         Me.txtCantPares.Location = New System.Drawing.Point(288, 64)
         Me.txtCantPares.MaxLength = 1
         Me.txtCantPares.Name = "txtCantPares"
-        Me.txtCantPares.Size = New System.Drawing.Size(36, 20)
+        Me.txtCantPares.ReadOnly = True
+        Me.txtCantPares.Size = New System.Drawing.Size(50, 20)
         Me.txtCantPares.TabIndex = 18
         Me.txtCantPares.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'txtCantUnDigito
         '
+        Me.txtCantUnDigito.BackColor = System.Drawing.SystemColors.Window
         Me.txtCantUnDigito.Location = New System.Drawing.Point(288, 132)
         Me.txtCantUnDigito.Name = "txtCantUnDigito"
-        Me.txtCantUnDigito.Size = New System.Drawing.Size(36, 20)
+        Me.txtCantUnDigito.ReadOnly = True
+        Me.txtCantUnDigito.Size = New System.Drawing.Size(50, 20)
         Me.txtCantUnDigito.TabIndex = 21
         Me.txtCantUnDigito.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'txtCantNumerosPrimos
         '
+        Me.txtCantNumerosPrimos.BackColor = System.Drawing.SystemColors.Window
         Me.txtCantNumerosPrimos.Location = New System.Drawing.Point(288, 222)
         Me.txtCantNumerosPrimos.Name = "txtCantNumerosPrimos"
-        Me.txtCantNumerosPrimos.Size = New System.Drawing.Size(36, 20)
+        Me.txtCantNumerosPrimos.ReadOnly = True
+        Me.txtCantNumerosPrimos.Size = New System.Drawing.Size(50, 20)
         Me.txtCantNumerosPrimos.TabIndex = 25
         Me.txtCantNumerosPrimos.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'txtDiferenciaMinMax
         '
+        Me.txtDiferenciaMinMax.BackColor = System.Drawing.SystemColors.Window
         Me.txtDiferenciaMinMax.Location = New System.Drawing.Point(288, 200)
         Me.txtDiferenciaMinMax.Name = "txtDiferenciaMinMax"
+        Me.txtDiferenciaMinMax.ReadOnly = True
         Me.txtDiferenciaMinMax.Size = New System.Drawing.Size(50, 20)
         Me.txtDiferenciaMinMax.TabIndex = 24
         Me.txtDiferenciaMinMax.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'txtSumatoria
         '
+        Me.txtSumatoria.BackColor = System.Drawing.SystemColors.Window
         Me.txtSumatoria.Location = New System.Drawing.Point(288, 177)
         Me.txtSumatoria.Name = "txtSumatoria"
+        Me.txtSumatoria.ReadOnly = True
         Me.txtSumatoria.Size = New System.Drawing.Size(50, 20)
         Me.txtSumatoria.TabIndex = 23
         Me.txtSumatoria.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
@@ -375,6 +385,15 @@ Partial Class frmAnalizarJugadas
         Me.picTeclado.TabIndex = 96
         Me.picTeclado.TabStop = False
         '
+        'lblNota
+        '
+        Me.lblNota.ForeColor = System.Drawing.Color.Sienna
+        Me.lblNota.Location = New System.Drawing.Point(21, 306)
+        Me.lblNota.Name = "lblNota"
+        Me.lblNota.Size = New System.Drawing.Size(287, 19)
+        Me.lblNota.TabIndex = 98
+        Me.lblNota.Text = "* Entre paréntesis se indica el promedio por tipo de jugada"
+        '
         'UsrTecladoVirtual1
         '
         Me.UsrTecladoVirtual1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
@@ -384,16 +403,6 @@ Partial Class frmAnalizarJugadas
         Me.UsrTecladoVirtual1.TabIndex = 97
         Me.UsrTecladoVirtual1.TeclaPulsada = Nothing
         Me.UsrTecladoVirtual1.Visible = False
-        '
-        'lblNota
-        '
-        Me.lblNota.ForeColor = System.Drawing.Color.Sienna
-        Me.lblNota.Location = New System.Drawing.Point(21, 306)
-        Me.lblNota.Name = "lblNota"
-        Me.lblNota.Size = New System.Drawing.Size(351, 27)
-        Me.lblNota.TabIndex = 98
-        Me.lblNota.Text = "* Entre paréntesis se indica el promedio por tipo de jugada (que puede ser Tradic" & _
-            "ional, Desquite o SOS)"
         '
         'frmAnalizarJugadas
         '

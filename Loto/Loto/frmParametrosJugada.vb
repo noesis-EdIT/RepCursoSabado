@@ -5,14 +5,16 @@ Public Class frmParametrosJugada
     Dim objParam As New clsParametrosJugada
 
     Private Sub btnGuardar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnGuardar.Click
+        Dim SeIncluyeronValoresRepetidos As Boolean
+
         Try
             If Len(txtExcluir1.Text) = 1 Then txtExcluir1.Text = "0" & txtExcluir1.Text
             If Len(txtExcluir2.Text) = 1 Then txtExcluir2.Text = "0" & txtExcluir2.Text
             If Len(txtExcluir3.Text) = 1 Then txtExcluir3.Text = "0" & txtExcluir3.Text
 
-            objParam.NumMasFrecuente1 = IIf(txtMasFrec1.Text <> "", txtMasFrec1.Text, -1)
-            objParam.NumMasFrecuente2 = IIf(txtMasFrec2.Text <> "", txtMasFrec2.Text, -1)
-            objParam.NumMasFrecuente3 = IIf(txtMasFrec3.Text <> "", txtMasFrec3.Text, -1)
+            objParam.NumIncluir1 = IIf(txtIncluir1.Text <> "", txtIncluir1.Text, -1)
+            objParam.NumIncluir2 = IIf(txtIncluir2.Text <> "", txtIncluir2.Text, -1)
+            objParam.NumIncluir3 = IIf(txtIncluir3.Text <> "", txtIncluir3.Text, -1)
             objParam.CantPares = txtCantPares.Text
             objParam.TerminacionParaDosNum = IIf(txtTerminacion.Text = "", "-1", txtTerminacion.Text)
             objParam.NumSorteoAnterior = IIf(txtNumSorteoAnt.Text = "", "-1", txtNumSorteoAnt.Text)
@@ -27,12 +29,83 @@ Public Class frmParametrosJugada
             objParam.NumExcluido2 = IIf(txtExcluir2.Text <> "", txtExcluir2.Text, -1)
             objParam.NumExcluido3 = IIf(txtExcluir3.Text <> "", txtExcluir3.Text, -1)
 
+            SeIncluyeronValoresRepetidos = ValoresRepetidos()
+            If SeIncluyeronValoresRepetidos Then Exit Sub
             Call objParam.Guardar()
             MessageBox.Show("Parámetros guardados correctamente.", "OK", MessageBoxButtons.OK, MessageBoxIcon.Information)
         Catch ex As Exception
             MessageBox.Show(ex.Message)
         End Try
     End Sub
+
+    Function ValoresRepetidos() As Boolean
+        Dim iValor1, iValor2, iValor3, num As SByte
+
+        iValor1 = IIf(Byte.TryParse(objParam.NumIncluir1, num), objParam.NumIncluir1, -1)
+        iValor2 = IIf(Byte.TryParse(objParam.NumIncluir2, num), objParam.NumIncluir2, -1)
+        iValor3 = IIf(Byte.TryParse(objParam.NumIncluir3, num), objParam.NumIncluir3, -1)
+
+        If (iValor1 <> -1) Then
+            If (iValor2 <> -1) Then
+                If iValor1 = iValor2 Then
+                    erParametros.SetError(txtIncluir3, "Valores repetidos.")
+                    txtIncluir1.Focus()
+                    Return True
+                End If
+            End If
+
+            If (iValor3 <> -1) Then
+                If iValor1 = iValor3 Then
+                    erParametros.SetError(txtIncluir3, "Valores repetidos.")
+                    txtIncluir1.Focus()
+                    Return True
+                End If
+            End If
+        End If
+
+        If (iValor2 <> -1) Then
+            If (iValor3 <> -1) Then
+                If iValor2 = iValor3 Then
+                    erParametros.SetError(txtIncluir3, "Valores repetidos.")
+                    txtIncluir1.Focus()
+                    Return True
+                End If
+            End If
+        End If
+
+        iValor1 = IIf(Byte.TryParse(objParam.NumExcluido1, num), objParam.NumExcluido1, -1)
+        iValor2 = IIf(Byte.TryParse(objParam.NumExcluido2, num), objParam.NumExcluido2, -1)
+        iValor3 = IIf(Byte.TryParse(objParam.NumExcluido3, num), objParam.NumExcluido3, -1)
+
+        If (iValor1 <> -1) Then
+            If (iValor2 <> -1) Then
+                If iValor1 = iValor2 Then
+                    erParametros.SetError(txtExcluir3, "Valores repetidos.")
+                    txtExcluir1.Focus()
+                    Return True
+                End If
+            End If
+
+            If (iValor3 <> -1) Then
+                If iValor1 = iValor3 Then
+                    erParametros.SetError(txtExcluir3, "Valores repetidos.")
+                    txtExcluir1.Focus()
+                    Return True
+                End If
+            End If
+        End If
+
+        If (iValor2 <> -1) Then
+            If (iValor3 <> -1) Then
+                If iValor2 = iValor3 Then
+                    erParametros.SetError(txtExcluir3, "Valores repetidos.")
+                    txtExcluir1.Focus()
+                    Return True
+                End If
+            End If
+        End If
+    End Function
+
 
     Private Sub frmParametrosJugada_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles Me.KeyDown
         Dim Res As MsgBoxResult
@@ -58,9 +131,9 @@ Public Class frmParametrosJugada
     End Sub
 
     Private Sub CargarControles()
-        txtMasFrec1.Text = IIf(objParam.NumMasFrecuente1 = -1, "", objParam.NumMasFrecuente1)
-        txtMasFrec2.Text = IIf(objParam.NumMasFrecuente2 = -1, "", objParam.NumMasFrecuente2)
-        txtMasFrec3.Text = IIf(objParam.NumMasFrecuente3 = -1, "", objParam.NumMasFrecuente3)
+        txtIncluir1.Text = IIf(objParam.NumIncluir1 = -1, "", objParam.NumIncluir1)
+        txtIncluir2.Text = IIf(objParam.NumIncluir2 = -1, "", objParam.NumIncluir2)
+        txtIncluir3.Text = IIf(objParam.NumIncluir3 = -1, "", objParam.NumIncluir3)
         txtCantPares.Text = objParam.CantPares
         txtTerminacion.Text = IIf(objParam.TerminacionParaDosNum = -1, "", objParam.TerminacionParaDosNum)
         txtNumSorteoAnt.Text = IIf(objParam.NumSorteoAnterior = -1, "", objParam.NumSorteoAnterior)
@@ -76,7 +149,8 @@ Public Class frmParametrosJugada
         txtExcluir3.Text = IIf(objParam.NumExcluido3 = -1, "", objParam.NumExcluido3)
     End Sub
 
-    Private Sub txtMasFrec1_KeyPress(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles txtMasFrec1.KeyPress, txtMasFrec2.KeyPress, txtMasFrec3.KeyPress, txtTerminacion.KeyPress, txtNumSorteoAnt.KeyPress, txtUnSoloDigito.KeyPress, txtPrimos.KeyPress, txtExcluir1.KeyPress, txtExcluir2.KeyPress, txtExcluir3.KeyPress
+    Private Sub txtMasFrec1_KeyPress(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles txtIncluir1.KeyPress, txtIncluir2.KeyPress, txtIncluir3.KeyPress, txtTerminacion.KeyPress, txtNumSorteoAnt.KeyPress, txtUnSoloDigito.KeyPress, txtPrimos.KeyPress, txtExcluir1.KeyPress, txtExcluir2.KeyPress, txtExcluir3.KeyPress
+        erParametros.Dispose()
         ValidarEnteros(e)
     End Sub
 

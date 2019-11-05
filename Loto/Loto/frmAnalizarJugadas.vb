@@ -500,7 +500,7 @@ Public Class frmAnalizarJugadas
             End If
         Next i
 
-        dPromCantPrimos = iCantPrimos / chlSorteos.CheckedItems.Count
+        dPromCantPrimos = Round(iCantPrimos / chlSorteos.CheckedItems.Count, 2)
         txtCantNumerosPrimos.Text = iCantPrimos & " (" & dPromCantPrimos & ")"
     End Sub
 

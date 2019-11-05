@@ -96,7 +96,7 @@ Public Class frmCargar
     Sub Alta()
         Dim ComandoADO As SqlCommand = New SqlCommand("spAgregarReg", CN)
         Dim Valor1 As Long
-        Dim Valor2 As Date
+        Dim Valor2 As Date 
         Dim Valor3, Valor4, Valor5 As String
         Dim i, CantFilas As Integer
         Dim paramNumSorteo, paramFecha, paramSorteoTra, paramSorteoDes, paramSorteoSal As SqlParameter
@@ -342,7 +342,7 @@ Public Class frmCargar
             sSorteo1 = VectorSorteos(i) : i += 1
             sSorteo2 = VectorSorteos(i) : i += 1
             sSorteo3 = VectorSorteos(i) : i += 1
-
+            
             dgvCarga.Rows.Add(iNumSorteo1, sFecha, sSorteo1, sSorteo2, sSorteo3)
         Loop
     End Sub
