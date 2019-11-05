@@ -3726,3 +3726,8 @@ C:\Users\Fernando\Documents\Visual Studio 2010\Projects\Loto2.75\Loto\obj\x86\De
 C:\Users\Fernando\Documents\Visual Studio 2010\Projects\Loto2.75\Loto\obj\x86\Debug\Loto.usrTecladoVirtual.resources
 C:\Users\Fernando\Documents\Visual Studio 2010\Projects\Loto2.75\Loto\obj\x86\Debug\GenerateResource.read.1.tlog
 C:\Users\Fernando\Documents\Visual Studio 2010\Projects\Loto2.75\Loto\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\Users\Fernando\GitProyecto\Loto\Loto\bin\Debug\Loto.exe.config
+C:\Users\Fernando\GitProyecto\Loto\Loto\obj\x86\Debug\Loto.vbproj.ResolveComReference.cache
+C:\Users\Fernando\GitProyecto\Loto\Loto\obj\x86\Debug\Loto.exe
+C:\Users\Fernando\GitProyecto\Loto\Loto\obj\x86\Debug\Loto.xml
+C:\Users\Fernando\GitProyecto\Loto\Loto\obj\x86\Debug\Loto.pdb

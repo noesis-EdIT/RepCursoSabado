@@ -1,5 +1,5 @@
 ﻿Imports System.Data.SqlClient
-
+'
 Public Class frmBuscarJugada
     Dim CantNumerosABuscar, iNum1 As Integer, iNum2 As Integer, iNum3 As Integer, iNum4 As Integer, iNum5 As Integer, iNum6 As Integer
     Dim sFechaInicial As String
