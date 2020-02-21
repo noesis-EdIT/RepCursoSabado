@@ -49,8 +49,6 @@ Public Class frmCargar
         sNumeroFilaFechaIncorrecta = FechaIncorrecta(dgvCarga)
         If sNumeroFilaFechaIncorrecta <> "" Then Exit Sub
 
-        'If Numero_sorteo_o_sorteo_ingresado_con_error(dgvCarga) Then Exit Sub
-
         sNumIncompleto = SorteoIncompleto(dgvCarga)
         If sNumIncompleto <> "" Then
             iPosComa = InStr(sNumIncompleto, ",")
@@ -95,7 +93,7 @@ Public Class frmCargar
 
     Sub Alta()
         Dim ComandoADO As SqlCommand = New SqlCommand("spAgregarReg", CN)
-        Dim Valor1 As Long
+        Dim Valor1 As Integer
         Dim Valor2 As Date 
         Dim Valor3, Valor4, Valor5 As String
         Dim i, CantFilas As Integer
@@ -136,7 +134,7 @@ Public Class frmCargar
                     End Select
                 Loop
 
-                If YaExisteNumSorteo(CStr(Valor1)) Then
+                If YaExisteNumSorteo(Valor1) Then
                     MessageBox.Show("Ya existe el número de sorteo " & CStr(Valor1) & "." & vbCrLf & "Ingresar otro nro. de sorteo o modificar el registro correspondiente a ese nro. desde el formulario de búsqueda.", "Sorteo ya cargado", MessageBoxButtons.OK, MessageBoxIcon.Information)
                     Exit Sub
                 End If
@@ -193,38 +191,12 @@ Public Class frmCargar
         TransformarFechaASql = Format(Fecha, "dd/MM/yyyy")
     End Function
 
-    Function YaExisteNumSorteo(ByVal sNum As String) As Boolean
-        Dim ComandoADO As SqlCommand
+    Function YaExisteNumSorteo(ByVal iNumSorteo As Integer) As Boolean
         Dim myReader As SqlDataReader
-        Dim paramEntrada1, paramEntrada2, paramEntrada3 As SqlParameter
         Dim bEncontrado As Boolean
 
-        ComandoADO = New SqlCommand("spBuscarSorteo", CN)
-        ComandoADO.CommandType = CommandType.StoredProcedure
-
-        paramEntrada1 = New SqlParameter("@Sorteo", SqlDbType.VarChar, 12)
-        paramEntrada1.Direction = ParameterDirection.Input
-        If sNum = "" Then
-            paramEntrada1.Value = DBNull.Value
-        Else
-            paramEntrada1.Value = sNum
-        End If
-        ComandoADO.Parameters.Add(paramEntrada1)
-
-        paramEntrada2 = New SqlParameter("@Fecha1", SqlDbType.DateTime, 8)
-        paramEntrada2.Direction = ParameterDirection.Input
-        paramEntrada2.Value = DBNull.Value
-        ComandoADO.Parameters.Add(paramEntrada2)
-
-        paramEntrada3 = New SqlParameter("@Fecha2", SqlDbType.DateTime, 8)
-        paramEntrada3.Direction = ParameterDirection.Input
-        paramEntrada3.Value = DBNull.Value
-        ComandoADO.Parameters.Add(paramEntrada3)
-
-        myReader = ComandoADO.ExecuteReader()
-
+        myReader = objConexion.BuscarJugada(iNumSorteo, "", #12:00:00 AM#, #12:00:00 AM#)
         If myReader.HasRows Then bEncontrado = True
-
         myReader.Close()
         If bEncontrado Then Return True
     End Function

@@ -27,7 +27,7 @@ Public Class frmAnalizarGrupoJugadas
         dtSorteos.Clear()
 
         Call LimpiarControles()
-        Call BuscarJugada("", dFecha1, dFecha2)
+        Call BuscarJugada(0, dFecha1, dFecha2)
         If dtSorteos.Rows.Count = 0 Then
             Cursor = Cursors.Default
             Exit Sub
@@ -63,34 +63,10 @@ Public Class frmAnalizarGrupoJugadas
         txtCantNumerosPrimos.Text = ""
     End Sub
 
-    Public Sub BuscarJugada(ByVal sNum As String, ByVal dFechaInicialSql As Date, ByVal dFechaFinalSql As Date)
-        Dim ComandoADO As SqlCommand
-        Dim paramEntrada1, paramEntrada2, paramEntrada3 As SqlParameter
+    Public Sub BuscarJugada(ByVal iNumSorteo As UShort, ByVal Fecha1 As Date, ByVal Fecha2 As Date)
         Dim objDa As SqlDataAdapter
 
-        ComandoADO = New SqlCommand("spBuscarSorteo", CN)
-        ComandoADO.CommandType = CommandType.StoredProcedure
-
-        paramEntrada1 = New SqlParameter("@Sorteo", SqlDbType.VarChar, 12)
-        paramEntrada1.Direction = ParameterDirection.Input
-        If sNum = "" Then
-            paramEntrada1.Value = DBNull.Value
-        Else
-            paramEntrada1.Value = sNum
-        End If
-        ComandoADO.Parameters.Add(paramEntrada1)
-
-        paramEntrada2 = New SqlParameter("@Fecha1", SqlDbType.DateTime, 8)
-        paramEntrada2.Direction = ParameterDirection.Input
-        paramEntrada2.Value = dFechaInicialSql
-        ComandoADO.Parameters.Add(paramEntrada2)
-
-        paramEntrada3 = New SqlParameter("@Fecha2", SqlDbType.DateTime, 8)
-        paramEntrada3.Direction = ParameterDirection.Input
-        paramEntrada3.Value = dFechaFinalSql
-        ComandoADO.Parameters.Add(paramEntrada3)
-
-        objDa = New SqlDataAdapter(ComandoADO)
+        objDa = objConexion.BuscarJugadaDA(iNumSorteo, "", Fecha1, Fecha2)
         objDa.Fill(dtSorteos)
     End Sub
 

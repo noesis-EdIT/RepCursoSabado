@@ -44,12 +44,12 @@ Public Class frmBackup
         Cursor = Cursors.WaitCursor
         If sServidor <> "" Then
             If txtDirPathBackup.Text <> "" Then
-                If crear_backup() = True Then
-                    MessageBox.Show("Backup creado satisfactoriamente.", "OK", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                If CrearBackup() = True Then
+                    MessageBox.Show("Backup creado correctamente.", "OK", MessageBoxButtons.OK, MessageBoxIcon.Information)
                     btnMostrarArchivo.Enabled = True
                 End If
             Else
-                MessageBox.Show("Seleccionar la ruta donde se creará el Backup.", "Carpeta", MessageBoxButtons.OK, MessageBoxIcon.Question)
+                MessageBox.Show("Antes seleccionar la ruta donde se" & vbCrLf & "creará el Backup (click en Examinar).", "Carpeta", MessageBoxButtons.OK, MessageBoxIcon.Question)
             End If
         Else
             MessageBox.Show("Ingresar el Nombre del Servidor de Datos SQL", "Servidor Sql", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
@@ -57,7 +57,7 @@ Public Class frmBackup
         Cursor = Cursors.Arrow
     End Sub
 
-    Private Function crear_backup() As Boolean
+    Private Function CrearBackup() As Boolean
         Dim conecsb As New SqlConnectionStringBuilder
         Dim NombreBackup As String
         Dim sCmd As New StringBuilder
@@ -76,9 +76,9 @@ Public Class frmBackup
                 sCmd.Append(", NAME = N'" + NombreBackup + "', SKIP, NOREWIND, NOUNLOAD,  STATS = 10")
                 Dim cmd As New SqlCommand(sCmd.ToString, con)
                 cmd.ExecuteNonQuery()
-                crear_backup = True
+                CrearBackup = True
             Catch ex As Exception
-                crear_backup = False
+                CrearBackup = False
                 MessageBox.Show(ex.Message)
             Finally
                 con.Close()

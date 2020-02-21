@@ -1,10 +1,14 @@
 ﻿Imports System.Data.SqlClient
 
 Public Class frmBuscarJugada
-    Dim CantNumerosABuscar, iNum1 As Integer, iNum2 As Integer, iNum3 As Integer, iNum4 As Integer, iNum5 As Integer, iNum6 As Integer
-    Dim sFechaInicial As String
-    Dim sFechaFinal As String
-    Public sNum As String
+    Dim CantNumerosABuscar As Integer
+    Dim iNum1 As Integer, iNum2 As Integer, iNum3 As Integer, iNum4 As Integer, iNum5 As Integer, iNum6 As Byte
+    Dim sContenido, sFechaInicial, sFechaFinal As String
+    Dim iNumJugada1, iNumJugada2 As UShort
+    Dim bBusquedaPorContenido, bBusquedaPorNumJugada As Boolean
+    Dim UsrControlVisible As Boolean
+    Dim FocoEnText1, FocoEnText2 As Boolean
+    Dim ListaDeBusqueda As New List(Of String)
 
     Function NumerosRepetidos() As Boolean
         'Verifica que la jugada que se ingresó no contenga un mismo número más de una vez
@@ -40,7 +44,6 @@ Public Class frmBuscarJugada
     End Function
 
     Function BuscarFechaInicial() As String
-        'FALTA considerar que cuando la consulta no traiga datos, no produzca error
         Dim ComandoADO As SqlCommand
         Dim myReader As SqlDataReader
         Dim paramResultado As SqlParameter
@@ -85,9 +88,19 @@ Public Class frmBuscarJugada
     End Function
 
     Public Sub btnBuscar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnBuscar.Click
+        If bBusquedaPorContenido Then
+            Call BuscarPorContenido()
+        ElseIf bBusquedaPorNumJugada Then
+            Call BuscarPorNumeroJugada()
+        End If
+        'Conviene ListView mejor para mostrar datos y DataGridView para mostrar y modificar datos
+    End Sub
+
+    Sub BuscarPorContenido()
         Dim dFecha1, dFecha2, dFechaInicialSql, dFechaFinalSql As Date
 
         sFechaInicial = dtpDesde.Text : sFechaFinal = dtpHasta.Text
+        sContenido = ""
 
         dFecha1 = dtpDesde.Text : dFecha2 = dtpHasta.Text
         If dFecha1 > dFecha2 Then
@@ -106,14 +119,14 @@ Public Class frmBuscarJugada
 
         'Verifico que la fecha final sea posterior a la inicial:
         If dFecha2 < dFecha1 Then
-            panel1.Text = "La fecha inicial no puede ser posterior a la final"
+            pnlBuscarContenido.Text = "La fecha inicial no puede ser posterior a la final"
             MessageBox.Show("La fecha inicial no puede ser posterior a la final.", "Fecha", MessageBoxButtons.OK, MessageBoxIcon.Information)
             Exit Sub
         End If
 
-        'Verifico las fechas estén dentro del rango de sorteos:
+        'Verifico que las fechas estén dentro del rango de sorteos:
         If dFechaInicialSql < #1/1/1993# OrElse dFechaFinalSql < #1/1/1993# Then
-            panel1.Text = "Fecha fuera de rango"
+            pnlBuscarContenido.Text = "Fecha fuera de rango"
             MessageBox.Show("Fecha fuera de rango", "Fecha equivocada", MessageBoxButtons.OK, MessageBoxIcon.Error)
 
             If dFechaInicialSql < #1/1/1993# Then
@@ -128,74 +141,91 @@ Public Class frmBuscarJugada
         End If
 
         'Agrego ceros a la secuencia cuando corresponda, para que cada número tenga siempre dos dígitos
-        sNum = txtBusquedaOrdenada.Text : sNum = sNum.Replace("-", "")
-        Dim a() As String
-        a = Split(sNum, "  ")
-        For i = 0 To UBound(a)
-            If Len(a(i)) < 2 Then a(i) = "0" & a(i)
-        Next
-        sNum = ""
-        For i = 0 To UBound(a)
-            sNum = sNum & a(i)
+        For i = 0 To ListaDeBusqueda.Count - 1
+            sContenido = sContenido & ListaDeBusqueda(i)
         Next
 
-        If CantNumerosABuscar = 0 Then sNum = ""
+        If CantNumerosABuscar = 0 Then sContenido = ""
         Cursor = Cursors.WaitCursor
-        Call Buscar(sNum, dFecha1, dFecha2)
+        Call Buscar(0, sContenido, dFecha1, dFecha2)
         ColoresFilaListView(Me, lvBuscarJugada)
         TipoLetraListView(lvBuscarJugada)
         Cursor = Cursors.Arrow
-        'Conviene ListView mejor para mostrar datos y DataGridView para mostrar y modificar datos
     End Sub
 
-    Public Sub Buscar(ByVal sNum As String, ByVal dFechaInicialSql As Date, ByVal dFechaFinalSql As Date)
-        Dim ComandoADO As SqlCommand
-        Dim myReader As SqlDataReader
-        Dim paramEntrada1, paramEntrada2, paramEntrada3 As SqlParameter
+    Sub BuscarPorNumeroJugada()
+        Dim rdReader As SqlDataReader
+        Dim Consulta, SorteoTConEspacio, SorteoDConEspacio, SorteoSConEspacio As String
         Dim CantFilas As Integer
-        Dim SorteoTConEspacio, SorteoDConEspacio, SorteoSConEspacio As String
+
+        iNumJugada1 = IIf(txtNumSorteo.Text = "", 0, txtNumSorteo.Text)
+        iNumJugada2 = IIf(txtNumSorteo2.Text = "", 0, txtNumSorteo2.Text)
+
+        If iNumJugada1 = 0 And iNumJugada2 <> 0 Then
+            MessageBox.Show("Falta el nº de jugada inicial.", "Números", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Exit Sub
+        ElseIf iNumJugada2 = 0 Then
+            Consulta = "SELECT NumSorteo, CONVERT(VARCHAR(10), Fecha, 103), SorteoTra, SorteoDes, SorteoSal FROM sorteos WHERE NumSorteo = " & iNumJugada1 & " ORDER BY Fecha"
+        ElseIf iNumJugada1 > iNumJugada2 Then
+            MessageBox.Show("El nº de jugada inicial no debe" & vbCrLf & "ser mayor que el nº final.", "Números", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            txtNumSorteo.Focus()
+            Exit Sub
+        Else
+            Consulta = "SELECT NumSorteo, CONVERT(VARCHAR(10), Fecha, 103), SorteoTra, SorteoDes, SorteoSal FROM sorteos WHERE (NumSorteo between " & iNumJugada1 & " and " & iNumJugada2 & ")" & " ORDER BY Fecha"
+        End If
 
         lvBuscarJugada.Items.Clear()
-        ComandoADO = New SqlCommand("spBuscarSorteo", CN)
-        ComandoADO.CommandType = CommandType.StoredProcedure
+        rdReader = objConexion.EjecutarConsultaDR(Consulta)
+        Cursor = Cursors.WaitCursor
 
-        paramEntrada1 = New SqlParameter("@Sorteo", SqlDbType.VarChar, 12)
-        paramEntrada1.Direction = ParameterDirection.Input
-        If sNum = "" Then
-            paramEntrada1.Value = DBNull.Value
-        Else
-            paramEntrada1.Value = sNum
-        End If
-        ComandoADO.Parameters.Add(paramEntrada1)
-
-        paramEntrada2 = New SqlParameter("@Fecha1", SqlDbType.DateTime, 8)
-        paramEntrada2.Direction = ParameterDirection.Input
-        paramEntrada2.Value = dFechaInicialSql
-        ComandoADO.Parameters.Add(paramEntrada2)
-
-        paramEntrada3 = New SqlParameter("@Fecha2", SqlDbType.DateTime, 8)
-        paramEntrada3.Direction = ParameterDirection.Input
-        paramEntrada3.Value = dFechaFinalSql
-        ComandoADO.Parameters.Add(paramEntrada3)
-
-        myReader = ComandoADO.ExecuteReader()
-
-        If myReader.HasRows Then
-            Do While myReader.Read
-                SorteoTConEspacio = AgregarEspacios(System.Convert.ToString(myReader.GetSqlValue(2)))
-                SorteoDConEspacio = AgregarEspacios(System.Convert.ToString(myReader.GetSqlValue(3)))
-                SorteoSConEspacio = AgregarEspacios(System.Convert.ToString(myReader.GetSqlValue(4)))
-                With lvBuscarJugada.Items.Add(System.Convert.ToString(myReader.GetSqlValue(0)))
-                    .SubItems.Add(System.Convert.ToString(myReader.GetSqlValue(1)))
+        If rdReader.HasRows Then
+            Do While rdReader.Read
+                SorteoTConEspacio = AgregarEspacios(System.Convert.ToString(rdReader.GetSqlValue(2)))
+                SorteoDConEspacio = AgregarEspacios(System.Convert.ToString(rdReader.GetSqlValue(3)))
+                SorteoSConEspacio = AgregarEspacios(System.Convert.ToString(rdReader.GetSqlValue(4)))
+                With lvBuscarJugada.Items.Add(System.Convert.ToString(rdReader.GetSqlValue(0)))
+                    .SubItems.Add(System.Convert.ToString(rdReader.GetSqlValue(1)))
                     .SubItems.Add(SorteoTConEspacio)
                     .SubItems.Add(SorteoDConEspacio)
                     .SubItems.Add(SorteoSConEspacio)
                 End With
+                txtFecha.Text = System.Convert.ToString(rdReader.GetSqlValue(1))
                 CantFilas += 1
             Loop
         End If
-        myReader.Close()
-        panel1.Text = CantFilas & " filas."
+
+        pnlBuscarContenido.Text = CantFilas & " filas."
+
+        ColoresFilaListView(Me, lvBuscarJugada)
+        TipoLetraListView(lvBuscarJugada)
+        Cursor = Cursors.Arrow
+    End Sub
+
+    Sub Buscar(ByVal iNumeroSorteo As UShort, ByVal sContenido As String, ByVal dFechaInicialSql As Date, ByVal dFechaFinalSql As Date)
+        Dim rdReader As SqlDataReader
+        Dim SorteoTConEspacio, SorteoDConEspacio, SorteoSConEspacio As String
+        Dim CantFilas As Integer
+
+        lvBuscarJugada.Items.Clear()
+        rdReader = objConexion.BuscarJugada(iNumeroSorteo, sContenido, dFechaInicialSql, dFechaFinalSql)
+
+        If rdReader.HasRows Then
+            Do While rdReader.Read
+                SorteoTConEspacio = AgregarEspacios(System.Convert.ToString(rdReader.GetSqlValue(2)))
+                SorteoDConEspacio = AgregarEspacios(System.Convert.ToString(rdReader.GetSqlValue(3)))
+                SorteoSConEspacio = AgregarEspacios(System.Convert.ToString(rdReader.GetSqlValue(4)))
+                With lvBuscarJugada.Items.Add(System.Convert.ToString(rdReader.GetSqlValue(0)))
+                    .SubItems.Add(System.Convert.ToString(rdReader.GetSqlValue(1)))
+                    .SubItems.Add(SorteoTConEspacio)
+                    .SubItems.Add(SorteoDConEspacio)
+                    .SubItems.Add(SorteoSConEspacio)
+                End With
+                txtFecha.Text = System.Convert.ToString(rdReader.GetSqlValue(1))
+                CantFilas += 1
+            Loop
+        End If
+
+        pnlBuscarContenido.Text = CantFilas & " filas."
     End Sub
 
     Function CantidadDeNumerosABuscar() As Byte
@@ -250,8 +280,6 @@ Public Class frmBuscarJugada
     End Sub
 
     Private Sub mtbBuscar_LostFocus(ByVal sender As Object, ByVal e As System.EventArgs) Handles mtbBuscar.LostFocus
-        If mtbBuscar.Text = "  -  -  -  -  -" Then txtBusquedaOrdenada.Text = ""
-
         If mtbBuscar.Text.Substring(0, 2) <> "  " Then
             iNum1 = mtbBuscar.Text.Substring(0, 2)
         Else
@@ -300,7 +328,6 @@ Public Class frmBuscarJugada
         End If
 
         If (CantNumerosABuscar <> 0) And NumerosRepetidos() Then
-            txtBusquedaOrdenada.Text = ""
             MessageBox.Show("Hay números repetidos en la secuencia a buscar.", "Corregir", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
             Exit Sub
         End If
@@ -328,7 +355,6 @@ Public Class frmBuscarJugada
         If Vector.Length >= 5 Then Vector(4) = iNum5
         If Vector.Length >= 6 Then Vector(5) = iNum6
 
-        'Ordenamiento por 'inserción'
         For i = 0 To Vector.Length - 1
             index = Vector(i)
             j = i - 1
@@ -344,16 +370,19 @@ Public Class frmBuscarJugada
         Next i
 
         j = 0
-        txtBusquedaOrdenada.Text = ""
-        txtBusquedaOrdenada.Text = Vector(0)
-        j += 1
         While j <= Vector.Length - 1
-            txtBusquedaOrdenada.Text = txtBusquedaOrdenada.Text & " - " & Vector(j)
+            If Len(Vector(j) < 2) Then
+                ListaDeBusqueda.Add("0" & Vector(j))
+            Else
+                ListaDeBusqueda.Add(Vector(j))
+            End If
             j += 1
         End While
     End Sub
 
     Private Sub frmBuscarJugada_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        bBusquedaPorNumJugada = False : bBusquedaPorContenido = True
+
         lvBuscarJugada.View = View.Details
         lvBuscarJugada.LabelEdit = True
         lvBuscarJugada.AllowColumnReorder = True
@@ -390,6 +419,7 @@ Public Class frmBuscarJugada
     Private Sub rbPrimerSorteo_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles rbPrimerSorteo.Click
         sFechaInicial = BuscarFechaInicial()
         dtpDesde.Text = sFechaInicial
+        mtbBuscar.Focus()
     End Sub
 
     Private Sub rbUltimoSorteo_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles rbUltimoSorteo.Click
@@ -398,10 +428,25 @@ Public Class frmBuscarJugada
         dFecha1 = BuscarUltimaFecha()
         dFecha2 = dtpHasta.Text
         dtpDesde.Text = dFecha1
+        dtpHasta.Value = Date.Now
 
-        If dFecha1 > dFecha2 Then
-            erpBuscarJugada.SetError(dtpHasta, "La fecha inicial no puede ser posterior a la fecha final")
+        mtbBuscar.Focus()
+    End Sub
+
+    Private Sub chkUltimoSorteo_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles chkUltimoSorteo.Click
+        Dim dFecha As Date
+        Dim myReader As SqlDataReader
+
+        myReader = objConexion.EjecutarConsultaDR("SELECT MAX(NumSorteo) FROM sorteos")
+        If myReader.HasRows Then
+            Do While myReader.Read
+                txtNumSorteo.Text = myReader(0)
+            Loop
+            myReader.Close()
         End If
+
+        dFecha = BuscarUltimaFecha()
+        txtFecha.Text = dFecha
     End Sub
 
     Private Sub dtpDesde_ValueChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles dtpDesde.ValueChanged
@@ -448,7 +493,8 @@ Public Class frmBuscarJugada
 
         f.ShowDialog(Me)
         f.Dispose()
-        Call Buscar(sNum, sFechaInicial, sFechaFinal)
+        Call Buscar(iNumJugada1, "", #12:00:00 AM#, #12:00:00 AM#)
+
         ColoresFilaListView(Me, lvBuscarJugada)
         TipoLetraListView(lvBuscarJugada)
 
@@ -461,12 +507,14 @@ Public Class frmBuscarJugada
     Private Sub btnEliminar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnEliminar.Click
         Dim Consulta, CadenaFila, NumSorteo As String
         Dim dFecha1, dFecha2 As Date
-        Dim bln As Boolean
         Dim Rta As MsgBoxResult
         Dim CantFilasEliminadas As Integer
 
-        bln = DateTime.TryParse(dtpDesde.Text, dFecha1)
-        bln = DateTime.TryParse(dtpHasta.Text, dFecha2)
+        If bBusquedaPorContenido Then
+            dFecha1 = dtpDesde.Text : dFecha2 = dtpHasta.Text
+        ElseIf bBusquedaPorNumJugada Then
+            dFecha1 = txtFecha.Text : dFecha2 = txtFecha.Text
+        End If
 
         Rta = MessageBox.Show("¿Confirma eliminación de registros?", "Eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
         If Rta = vbNo Then Exit Sub
@@ -480,27 +528,20 @@ Public Class frmBuscarJugada
             CantFilasEliminadas += 1
         Next
 
-        Call Buscar("", dFecha1, dFecha2)
+        If bBusquedaPorContenido Then
+            Call Buscar(0, "", dFecha1, dFecha2)
+        ElseIf bBusquedaPorNumJugada Then
+            Call Buscar(iNumJugada1, "", #12:00:00 AM#, #12:00:00 AM#)
+        End If
+
         ColoresFilaListView(Me, lvBuscarJugada)
         TipoLetraListView(lvBuscarJugada)
 
         If CantFilasEliminadas = 1 Then
-            panel1.Text = CantFilasEliminadas & " fila eliminada"
+            pnlBuscarContenido.Text = CantFilasEliminadas & " fila eliminada"
         Else
-            panel1.Text = CantFilasEliminadas & " filas eliminadas"
+            pnlBuscarContenido.Text = CantFilasEliminadas & " filas eliminadas"
         End If
-    End Sub
-
-    'Private Sub Ejecutar(ByVal Consulta As String)
-    '    Dim Filas As Integer
-    '    Dim com As SqlCommand = New SqlCommand(Consulta, CN)
-    '    com.Connection = CN
-    '    com.CommandText = Consulta
-    '    Filas = com.ExecuteNonQuery
-    'End Sub
-
-    Private Sub mtbFechaDesde_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs)
-        If e.KeyChar = Chr(13) Then SendKeys.Send("{tab}")
     End Sub
 
     Private Sub lvBuscarJugada_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles lvBuscarJugada.Click
@@ -519,9 +560,102 @@ Public Class frmBuscarJugada
 
     Private Sub lvBuscarJugada_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles lvBuscarJugada.SelectedIndexChanged
         If lvBuscarJugada.SelectedItems.Count < 2 Then
-            panel1.Text = lvBuscarJugada.SelectedItems.Count & " fila seleccionada"
+            pnlBuscarContenido.Text = lvBuscarJugada.SelectedItems.Count & " fila seleccionada"
         Else
-            panel1.Text = lvBuscarJugada.SelectedItems.Count & " filas seleccionadas"
+            pnlBuscarContenido.Text = lvBuscarJugada.SelectedItems.Count & " filas seleccionadas"
         End If
+    End Sub
+
+    Private Sub btnCambiarBusqueda_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnCambiarBusqueda.Click
+        bBusquedaPorNumJugada = Not bBusquedaPorNumJugada
+        bBusquedaPorContenido = Not bBusquedaPorContenido
+
+        If bBusquedaPorNumJugada Then
+            pnlBuscarNumJugada.Left = 17
+            btnCambiarBusqueda.Text = "Cambiar a buscar por contenido"
+            pnlBuscarNumJugada.Visible = False
+            tmrDesplazarGb1 = New Timer
+            tmrDesplazarGb1.Interval = 25
+            tmrDesplazarGb1.Enabled = True
+        ElseIf bBusquedaPorContenido Then
+            pnlBuscarContenido.Left = 17
+            btnCambiarBusqueda.Text = "Cambiar a buscar por nº de jugada"
+            pnlBuscarContenido.Visible = False
+            tmrDesplazarGb2 = New Timer
+            tmrDesplazarGb2.Interval = 25
+            tmrDesplazarGb2.Enabled = True
+        End If
+    End Sub
+
+    Private Sub tmrDesplazarGb1_Tick(ByVal sender As Object, ByVal e As System.EventArgs) Handles tmrDesplazarGb1.Tick
+        pnlBuscarContenido.Left = pnlBuscarContenido.Left - 100
+        If pnlBuscarContenido.Left <= -1000 Then
+            pnlBuscarNumJugada.Visible = True
+            tmrDesplazarGb1.Enabled = False
+            txtNumSorteo.Focus()
+        End If
+    End Sub
+
+    Private Sub tmrDesplazarGb2_Tick(ByVal sender As Object, ByVal e As System.EventArgs) Handles tmrDesplazarGb2.Tick
+        pnlBuscarNumJugada.Left = pnlBuscarNumJugada.Left - 100
+        If pnlBuscarNumJugada.Left <= -1000 Then
+            pnlBuscarContenido.Visible = True
+            tmrDesplazarGb2.Enabled = False
+            mtbBuscar.Focus()
+        End If
+    End Sub
+
+    Private Sub txtNumSorteo_KeyPress(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles txtNumSorteo.KeyPress, txtNumSorteo2.KeyPress
+        If ((Asc(e.KeyChar) < 48) Or (Asc(e.KeyChar) > 57)) And Asc(e.KeyChar) <> 13 And Asc(e.KeyChar) <> 8 And Asc(e.KeyChar) <> 32 Then
+            e.Handled = True
+        End If
+    End Sub
+
+    Private Sub picTeclado_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles picTeclado.Click
+        pnlTeclado.Visible = True
+        UsrTecladoVirtual1.Focus()
+
+        If UsrControlVisible = False Then
+            UsrControlVisible = True
+            pnlTeclado.Visible = True
+        Else
+            UsrControlVisible = False
+            pnlTeclado.Visible = False
+        End If
+    End Sub
+
+    Private Sub UsrTecladoVirtual1_PropertyChanged(ByVal sender As Object, ByVal e As System.ComponentModel.PropertyChangedEventArgs) Handles UsrTecladoVirtual1.PropertyChanged
+        If UsrTecladoVirtual1.TeclaPulsada <> "Cerrar" Then
+            If FocoEnText1 Then
+                If Len(txtNumSorteo.Text) < txtNumSorteo.MaxLength Then
+                    txtNumSorteo.Text = txtNumSorteo.Text & UsrTecladoVirtual1.TeclaPulsada
+                End If
+            ElseIf FocoEnText2 Then
+                If Len(txtNumSorteo2.Text) < txtNumSorteo2.MaxLength Then
+                    txtNumSorteo2.Text = txtNumSorteo2.Text & UsrTecladoVirtual1.TeclaPulsada
+                End If
+            End If
+        Else
+            pnlTeclado.Visible = False
+            UsrControlVisible = False
+        End If
+    End Sub
+
+    Private Sub txtNumSorteo_LostFocus(ByVal sender As Object, ByVal e As System.EventArgs) Handles txtNumSorteo.LostFocus
+        FocoEnText1 = True : FocoEnText2 = False
+    End Sub
+
+    Private Sub txtNumSorteo2_LostFocus(ByVal sender As Object, ByVal e As System.EventArgs) Handles txtNumSorteo2.LostFocus
+        FocoEnText1 = False : FocoEnText2 = True
+    End Sub
+
+    Private Sub picTeclado_MouseEnter(ByVal sender As Object, ByVal e As System.EventArgs) Handles picTeclado.MouseEnter
+        Cursor = System.Windows.Forms.Cursors.Hand
+        panel1.Text = "Clic para acceder al teclado virtual"
+    End Sub
+
+    Private Sub picTeclado_MouseLeave(ByVal sender As Object, ByVal e As System.EventArgs) Handles picTeclado.MouseLeave
+        Cursor = System.Windows.Forms.Cursors.Arrow
+        panel1.Text = ""
     End Sub
 End Class

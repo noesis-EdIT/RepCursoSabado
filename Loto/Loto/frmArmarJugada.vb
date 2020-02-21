@@ -10,6 +10,7 @@ Public Class frmArmarJugada
     Dim oLabel() As Label
     Dim iNumPicActual As Integer
     Dim VecOrdenado(41, 1) As String
+    Dim bMensajeYaEnviado As Boolean
 
     Private Sub Form1_FormClosing(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
         statusBar1.Panels.Remove(panel1)
@@ -123,11 +124,12 @@ Public Class frmArmarJugada
             End If
         Loop
 
-        If (Opcion(0) And Opcion(1) And Opcion(2) And Opcion(3) And Opcion(4) And Opcion(5) And Opcion(6) And Opcion(7) And Opcion(8) And Opcion(9)) Then
-            GenerarSorteo()
-            'OrdenacionPorBurbujeo(NumerosGenerados)
-            OrdenacionPorSeleccion(NumerosGenerados)
-        End If
+        'If (Opcion(0) And Opcion(1) And Opcion(2) And Opcion(3) And Opcion(4) And Opcion(5) And Opcion(6) And Opcion(7) And Opcion(8) And Opcion(9)) Then
+        '    GenerarSorteo()
+        '    OrdenacionPorSeleccion(NumerosGenerados)
+        'End If
+
+        OrdenacionPorSeleccion(NumerosGenerados)
 
         For i = 0 To 5
             If sNumero = "" Then
@@ -625,8 +627,9 @@ EfectosSorteo:
         UltimaFechaBase = UltimaFechaIngresada()
         UltimaFechaReal = UltimaFechaSorteada()
 
-        If UltimaFechaBase <> UltimaFechaReal Then
+        If (UltimaFechaBase <> UltimaFechaReal) And Not bMensajeYaEnviado Then
             MessageBox.Show("IMPORTANTE: La base no está actualizada con el último sorteo." & vbCrLf & "El último sorteo en la base es del " & UltimaFechaBase & "." & vbCrLf & "Se considerará como sorteo anterior al último sorteo ingresado" & vbCrLf & "(el de fecha más reciente).", "Último sorteo.", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+            bMensajeYaEnviado = True
         End If
 
         sNumSorteoAnterior = BuscarUltimaJugada()

@@ -117,11 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="erpBuscarJugada.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <metadata name="erpAnalizarSerie.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>35</value>
+    <value>29</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="picTeclado.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -190,24 +190,18 @@
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABAAEAICAQAAAAAADoAgAAFgAAACgAAAAgAAAAQAAAAAEABAAAAAAAgAIAAAAAAAAAAAAAAAAAAAAA
-        AAAAAAAAAACAAACAAAAAgIAAgAAAAIAAgACAgAAAwMDAAICAgAAAAP8AAP8AAAD//wD/AAAA/wD/AP//
-        AAD///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAd4AAAAAAAAAAAHeAAAAAAHeAAAAAAAAAAAB3gAAAAAB3
-        gAAAAAAAAAAAd4AAAAAAd4AAAAAAAAAAAHeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-        AAAAdwAAAAAAAAAHcAAAAAAAAHcIAAAAAAAAB3CAAAAAAAB3CAAAAAcAAAdwgAAAAAAAdwgAAAAHAAAH
-        cIAAAAAAAHcIAAAABwAAB3CAAAAAAAB3CAAAAAcAAAdwgAAAAAAAAAgAAAAAAAAAAIAAAAAAAAAIAAAA
-        AAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB3eAAAAAB3eAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACIAAAAAACIAAAAAAAAAAAAiAAAAAAAiAAAAA
-        AAAAAAAIgAAAAAAIgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/////////////////////gD/4A4A/
-        +AOAP/gDgD/4A4A/+AOAA4ADgAOAA4ADgAOAAAADgAAAA4AAAAOAAAADgAAAA8AAAAfAAAAHwAAAB/gD
-        gD/4A4A/+AOAP/gDgD/8B8B//AfAf/wHwH/8B8B//////////////////////w==
+        AAAAAAAAAACAAACAAAAAgIAAgAAAAIAAgACAgAAAgICAAMDAwAAAAP8AAP8AAAD//wD/AAAA/wD/AP//
+        AAD///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADu7u7u7u7u7u4AAAAAAAAA7u7u
+        7u7u7u7u4AAAAAAAAO4AAAAOAA4ADuAAAAAAAADuCIiIDggOCA7gAAAAAAAA7gAAAA4ADggO4AAAAAAA
+        AO7u7u7u7u4IDuAAAAAAAADuAA4ADgAOCA7gAAAAAAAA7ggOCA4IDggO4AAAAAAAAO4ADgAOAA4ADuAA
+        AAAAAADu7u7u7u7u7u7gAAAAAAAA7gAOAA4ADgAO4AAAAAAAAO4IDggOCA4IDuAAAAAAAADuAA4ADgAO
+        AA7gAAAAAAAA7u7u7u7u7u7u4AAAAAAAAO4ADgAOAA4ADuAAAAAAAADuCA4IDggOCA7gAAAAAAAA7gAO
+        AA4ADgAO4AAAAAAAAO7u7u7u7u7u7uAAAAAAAADuAA4ADgAOAA7gAAAAAAAA7ggOCA4IDggO4AAAAAAA
+        AO4ADgAOAA4ADuAAAAAAAADu7u7u7u7u7u7gAAAAAAAA7gAAAAAAAAAO4AAAAAAAAO4Au7u7u7u7DuAA
+        AAAAAADuALu7u7u7uw7gAAAAAAAA7gAAAAAAAAAO4AAAAAAAAO4AAAAAAAAADuAAAAAAAADu7u7u7u7u
+        7u7gAAAAAAAA7u7u7u7u7u7u4AAAAAAAAAAAAAAAAAAAAAAAAAD8AAA/+AAAH/gAAB/4AAAf+AAAH/gA
+        AB/4AAAf+AAAH/gAAB/4AAAf+AAAH/gAAB/4AAAf+AAAH/gAAB/4AAAf+AAAH/gAAB/4AAAf+AAAH/gA
+        AB/4AAAf+AAAH/gAAB/4AAAf+AAAH/gAAB/4AAAf+AAAH/gAAB/4AAAf+AAAPw==
 </value>
   </data>
-  <metadata name="tmrDesplazarGb1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>161, 17</value>
-  </metadata>
-  <metadata name="tmrDesplazarGb2.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>307, 17</value>
-  </metadata>
 </root>

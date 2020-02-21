@@ -9,12 +9,9 @@ Public Class frmAnalizarJugadas
     Dim UsrControlVisible As Boolean
 
     Private Sub btnAnalizarJugada_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnAnalizarJugada.Click
-        Dim sNumSorteo As String = txtNumSorteo.Text
-        Dim ComandoADO As SqlCommand
-        Dim paramEntrada1, paramEntrada2, paramEntrada3 As SqlParameter
+        Dim iNumSorteo As Integer = txtNumSorteo.Text
         Dim myReader As SqlDataReader
         Dim bln As Boolean
-        Dim iNumSorteo As Integer
 
         Call LimpiarControles()
         strSorteo = "" : strSorteoNeto = "" : lstNumerosSinRepetir = New List(Of String)
@@ -22,36 +19,13 @@ Public Class frmAnalizarJugadas
         bln = Integer.TryParse(txtNumSorteo.Text, iNumSorteo)
         If Not bln Then Exit Sub
 
-        ComandoADO = New SqlCommand("spBuscarSorteo", CN)
-        'select NumSorteo, CONVERT(VARCHAR(10), Fecha, 103), SorteoTra, SorteoDes, SorteoSal from Sorteos where NumSorteo = @Sorteo
-        ComandoADO.CommandType = CommandType.StoredProcedure
-
-        paramEntrada1 = New SqlParameter("@Sorteo", SqlDbType.VarChar, 12)
-        paramEntrada1.Direction = ParameterDirection.Input
-
-        If sNumSorteo = "" Then
-            paramEntrada1.Value = DBNull.Value
-        Else
-            paramEntrada1.Value = sNumSorteo
-        End If
-        ComandoADO.Parameters.Add(paramEntrada1)
-
-        paramEntrada2 = New SqlParameter("@Fecha1", SqlDbType.DateTime, 8)
-        paramEntrada2.Direction = ParameterDirection.Input
-        paramEntrada2.Value = DBNull.Value
-        ComandoADO.Parameters.Add(paramEntrada2)
-
-        paramEntrada3 = New SqlParameter("@Fecha2", SqlDbType.DateTime, 8)
-        paramEntrada3.Direction = ParameterDirection.Input
-        paramEntrada3.Value = DBNull.Value
-        ComandoADO.Parameters.Add(paramEntrada3)
-
-        myReader = ComandoADO.ExecuteReader()
+        myReader = objConexion.BuscarJugada(iNumSorteo, "", #12:00:00 AM#, #12:00:00 AM#)
 
         If myReader.HasRows Then
             Do While myReader.Read
                 dtpFecha.Text = System.Convert.ToString(myReader.GetSqlValue(1))
-
+                'Dim number As Date
+                'dtpFecha.Text = IIf(Date.TryParse(System.Convert.ToString(myReader.GetSqlValue(1)), number), System.Convert.ToString(myReader.GetSqlValue(1)), "")
                 If chlSorteos.GetItemCheckState(0).ToString() = "Checked" Then
                     If myReader(2) = "000000000000" Then
                         strSorteo = "xxxxxxxxxxxx"

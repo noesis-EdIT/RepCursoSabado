@@ -92,6 +92,12 @@
     <Compile Include="frmAnalizarJugadas.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="frmAnalizarSerie.Designer.vb">
+      <DependentUpon>frmAnalizarSerie.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmAnalizarSerie.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frmFiltrar.Designer.vb">
       <DependentUpon>frmFiltrar.vb</DependentUpon>
     </Compile>
@@ -201,6 +207,9 @@
     <EmbeddedResource Include="frmAnalizarJugadas.resx">
       <DependentUpon>frmAnalizarJugadas.vb</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmAnalizarSerie.resx">
+      <DependentUpon>frmAnalizarSerie.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmFiltrar.resx">
       <DependentUpon>frmFiltrar.vb</DependentUpon>

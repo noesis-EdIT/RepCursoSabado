@@ -299,10 +299,6 @@ Module Module1
         Next
     End Sub
 
-    'Public Function AgregarCero(ByVal sCadena As String) As String
-    '    If Len(sCadena) = 1 Then sCadena = "0" & sCadena
-    'End Function
-
     Public Sub TipoLetraListView(ByVal LView1 As ListView)
         Dim lvi As ListViewItem
         For Each lvi In LView1.Items

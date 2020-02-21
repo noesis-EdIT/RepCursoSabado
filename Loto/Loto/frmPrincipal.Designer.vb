@@ -47,11 +47,13 @@ Partial Class frmPrincipal
         Me.mnuEstadisticasAnalizarJugada = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnuEstadisticasAnalizarGrupoJugadas = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnuEstadisticasVariacionDeUnNro = New System.Windows.Forms.ToolStripMenuItem()
+        Me.mnuEstadisticasAnalizarSerie = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnuVentanas = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnuVentanasHorizontal = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnuVentanasVertical = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnuVentanasMosaicos = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnuVentanasCerrarTodas = New System.Windows.Forms.ToolStripMenuItem()
+        Me.mnuVentanasSep = New System.Windows.Forms.ToolStripSeparator()
         Me.mnuAyuda = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnuAyudaVer = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnuAyudaAcercade = New System.Windows.Forms.ToolStripMenuItem()
@@ -70,7 +72,6 @@ Partial Class frmPrincipal
         Me.gbHelp = New System.Windows.Forms.GroupBox()
         Me.lblTaparArriba = New System.Windows.Forms.Label()
         Me.WebBrowser1 = New System.Windows.Forms.WebBrowser()
-        Me.mnuVentanasSep = New System.Windows.Forms.ToolStripSeparator()
         Me.MenuStrip1.SuspendLayout()
         CType(Me.picCerrar, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.gbHelp.SuspendLayout()
@@ -172,7 +173,7 @@ Partial Class frmPrincipal
         '
         'mnuEstadisticas
         '
-        Me.mnuEstadisticas.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mnuEstadisticasNrosFrecuentes, Me.mnuEstadisticasNrosFrecuentesCol, Me.mnuEstadisticasSep1, Me.mnuEstadisticasSumatoria, Me.mnuEstadisticasPromedio, Me.mnuEstadisticasSep2, Me.mnuEstadisticasAnalizarJugada, Me.mnuEstadisticasAnalizarGrupoJugadas, Me.mnuEstadisticasVariacionDeUnNro})
+        Me.mnuEstadisticas.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mnuEstadisticasNrosFrecuentes, Me.mnuEstadisticasNrosFrecuentesCol, Me.mnuEstadisticasSep1, Me.mnuEstadisticasSumatoria, Me.mnuEstadisticasPromedio, Me.mnuEstadisticasSep2, Me.mnuEstadisticasAnalizarJugada, Me.mnuEstadisticasAnalizarGrupoJugadas, Me.mnuEstadisticasVariacionDeUnNro, Me.mnuEstadisticasAnalizarSerie})
         Me.mnuEstadisticas.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.mnuEstadisticas.Name = "mnuEstadisticas"
         Me.mnuEstadisticas.Size = New System.Drawing.Size(87, 21)
@@ -230,6 +231,12 @@ Partial Class frmPrincipal
         Me.mnuEstadisticasVariacionDeUnNro.Size = New System.Drawing.Size(249, 22)
         Me.mnuEstadisticasVariacionDeUnNro.Text = "Variación de un mismo nro."
         '
+        'mnuEstadisticasAnalizarSerie
+        '
+        Me.mnuEstadisticasAnalizarSerie.Name = "mnuEstadisticasAnalizarSerie"
+        Me.mnuEstadisticasAnalizarSerie.Size = New System.Drawing.Size(249, 22)
+        Me.mnuEstadisticasAnalizarSerie.Text = "Analizar serie"
+        '
         'mnuVentanas
         '
         Me.mnuVentanas.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mnuVentanasHorizontal, Me.mnuVentanasVertical, Me.mnuVentanasMosaicos, Me.mnuVentanasCerrarTodas, Me.mnuVentanasSep})
@@ -241,26 +248,31 @@ Partial Class frmPrincipal
         'mnuVentanasHorizontal
         '
         Me.mnuVentanasHorizontal.Name = "mnuVentanasHorizontal"
-        Me.mnuVentanasHorizontal.Size = New System.Drawing.Size(152, 22)
+        Me.mnuVentanasHorizontal.Size = New System.Drawing.Size(150, 22)
         Me.mnuVentanasHorizontal.Text = "Horizontal"
         '
         'mnuVentanasVertical
         '
         Me.mnuVentanasVertical.Name = "mnuVentanasVertical"
-        Me.mnuVentanasVertical.Size = New System.Drawing.Size(152, 22)
+        Me.mnuVentanasVertical.Size = New System.Drawing.Size(150, 22)
         Me.mnuVentanasVertical.Text = "Vertical"
         '
         'mnuVentanasMosaicos
         '
         Me.mnuVentanasMosaicos.Name = "mnuVentanasMosaicos"
-        Me.mnuVentanasMosaicos.Size = New System.Drawing.Size(152, 22)
+        Me.mnuVentanasMosaicos.Size = New System.Drawing.Size(150, 22)
         Me.mnuVentanasMosaicos.Text = "Mosaicos"
         '
         'mnuVentanasCerrarTodas
         '
         Me.mnuVentanasCerrarTodas.Name = "mnuVentanasCerrarTodas"
-        Me.mnuVentanasCerrarTodas.Size = New System.Drawing.Size(152, 22)
+        Me.mnuVentanasCerrarTodas.Size = New System.Drawing.Size(150, 22)
         Me.mnuVentanasCerrarTodas.Text = "Cerrar todas"
+        '
+        'mnuVentanasSep
+        '
+        Me.mnuVentanasSep.Name = "mnuVentanasSep"
+        Me.mnuVentanasSep.Size = New System.Drawing.Size(147, 6)
         '
         'mnuAyuda
         '
@@ -273,13 +285,13 @@ Partial Class frmPrincipal
         'mnuAyudaVer
         '
         Me.mnuAyudaVer.Name = "mnuAyudaVer"
-        Me.mnuAyudaVer.Size = New System.Drawing.Size(152, 22)
+        Me.mnuAyudaVer.Size = New System.Drawing.Size(149, 22)
         Me.mnuAyudaVer.Text = "Ver la ayuda"
         '
         'mnuAyudaAcercade
         '
         Me.mnuAyudaAcercade.Name = "mnuAyudaAcercade"
-        Me.mnuAyudaAcercade.Size = New System.Drawing.Size(152, 22)
+        Me.mnuAyudaAcercade.Size = New System.Drawing.Size(149, 22)
         Me.mnuAyudaAcercade.Text = "Acerca de..."
         '
         'SkinEngine1
@@ -467,11 +479,6 @@ Partial Class frmPrincipal
         Me.WebBrowser1.Size = New System.Drawing.Size(186, 448)
         Me.WebBrowser1.TabIndex = 7
         '
-        'mnuVentanasSep
-        '
-        Me.mnuVentanasSep.Name = "mnuVentanasSep"
-        Me.mnuVentanasSep.Size = New System.Drawing.Size(149, 6)
-        '
         'frmPrincipal
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -542,4 +549,5 @@ Partial Class frmPrincipal
     Friend WithEvents mnuEstadisticasSep1 As System.Windows.Forms.ToolStripSeparator
     Friend WithEvents mnuEstadisticasSep2 As System.Windows.Forms.ToolStripSeparator
     Friend WithEvents mnuVentanasSep As System.Windows.Forms.ToolStripSeparator
+    Friend WithEvents mnuEstadisticasAnalizarSerie As System.Windows.Forms.ToolStripMenuItem
 End Class

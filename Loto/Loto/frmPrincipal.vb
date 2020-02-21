@@ -51,10 +51,13 @@ Public Class frmPrincipal
         panel1.Text = ""
     End Sub
 
-    Private Sub mnuBuscarBuscarJugada_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mnuBuscarBuscarJugada.Click
+    Private Sub mnuBuscarBuscarJugadaContenido_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mnuBuscarBuscarJugada.Click
         Dim frm As New frmBuscarJugada
         AbrirFormulario(frm)
-        'If gbHelp.Visible Then gbHelp.SendToBack()
+    End Sub
+
+    Private Sub mnuBuscarBuscarJugadaNumSorteo_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+
     End Sub
 
     Private Sub mnuArchivoBasesConfig_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mnuArchivoBasesConfig.Click
@@ -225,6 +228,11 @@ Public Class frmPrincipal
 
     Private Sub mnuEstadisticasAnalizarGrupoJugadas_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mnuEstadisticasAnalizarGrupoJugadas.Click
         Dim frm As New frmAnalizarGrupoJugadas
+        AbrirFormulario(frm)
+    End Sub
+
+    Private Sub mnuEstadisticasAnalizarSerie_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mnuEstadisticasAnalizarSerie.Click
+        Dim frm As New frmAnalizarSerie
         AbrirFormulario(frm)
     End Sub
 End Class
