@@ -1,1 +1,1 @@
-Ahora que ya sabemos cómo subir código a los repositorios y sincronizarnos, en los siguientes artículos vamos a ver operativas menos frecuentes con Git, pero que son fundamentales también en la gestión habitual de proyectos. No son acciones que vas a realizar todos los días al usar el sistema de control de versiones, pero son importantes para administrar el código de los proyectos y colaborar entre componentes de equipos de trabajo o proyectos Open Source. 
+Coartada
